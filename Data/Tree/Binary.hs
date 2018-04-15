@@ -20,8 +20,3 @@ instance Foldable Crotch where
 	foldr f acc (Less l) = f l acc
 	foldr f acc (Greater r) = f r acc
 	foldr f acc (Crotch l r) = f l $ f r acc
-
--- example :: Binary Char
--- example = 'F' :< Crotch
---     ('B' :< Crotch ('A' :< End) ('D' :< Crotch ('C' :< End) ('E' :< End)))
---     ('G' :< Greater ('I' :< Less ('H' :< End)))
