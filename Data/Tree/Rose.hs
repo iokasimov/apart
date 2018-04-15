@@ -1,3 +1,5 @@
-module Data.Tree.Rose where
+module Data.Tree.Rose (Rose) where
 
 import Data.Tree (Tree)
+
+type Rose a = Tree [] a
