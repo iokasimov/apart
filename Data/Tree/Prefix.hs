@@ -1,10 +1,10 @@
-module Data.Tree.Prefix (Prefix) where
+module Data.Tree.Prefix (Prefix, Labeled (..)) where
 
+import Control.Comonad
 import Control.Comonad.Cofree
+import Data.Foldable
 
-import Data.Tree (Tree)
-
-type Prefix s a = Tree (Labeled s) a
+type Prefix s a = Cofree (Labeled s) a
 
 data Labeled s a = forall t . Traversable t => Hop s (t a)
 

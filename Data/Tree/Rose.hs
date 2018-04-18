@@ -1,5 +1,5 @@
 module Data.Tree.Rose (Rose) where
 
-import Data.Tree (Tree)
+import Control.Comonad.Cofree
 
-type Rose a = Tree [] a
+type Rose a = Cofree [] a

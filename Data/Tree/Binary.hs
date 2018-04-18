@@ -2,9 +2,7 @@ module Data.Tree.Binary (Binary) where
 
 import Control.Comonad.Cofree
 
-import Data.Tree (Tree)
-
-type Binary a = Tree Crotch a
+type Binary a = Cofree Crotch a
 
 data Crotch a = End | Less a | Greater a | Crotch a a
 
