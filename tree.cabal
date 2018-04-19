@@ -17,13 +17,13 @@ source-repository head
 
 library
   exposed-modules:     Data.Partially, Data.Tree.Rose, Data.Tree.Binary, Data.Tree.Prefix, Data.Tree.Finger
-  build-depends:       base == 4.*, free, comonad, lens
+  build-depends:       base == 4.*, free, comonad
   default-language:    Haskell2010
   default-extensions:  TypeSynonymInstances, ExistentialQuantification, RankNTypes, KindSignatures, DataKinds, FlexibleInstances
 
-executable debug
-  main-is:             Main.hs
-  build-depends:       base == 4.*, free, comonad, lens
+executable example
+  main-is:             Example/Main.hs
+  build-depends:       base == 4.*, free, comonad
   other-modules:       Data.Partially
   default-language:    Haskell2010
   default-extensions:  TypeSynonymInstances, ExistentialQuantification, RankNTypes, KindSignatures, DataKinds, FlexibleInstances
