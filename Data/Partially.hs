@@ -1,35 +1,31 @@
-module Data.Partially (Partially, Shape (..)) where
+module Data.Partially (Partially (..)) where
 
 import Data.Foldable (Foldable (..))
 import Data.Bifunctor (Bifunctor (..))
 import Data.Bifoldable (Bifoldable (..))
 import Data.Bitraversable (Bitraversable (..))
+import Data.Shape (Shape (..))
 import Control.Comonad.Cofree (Cofree (..))
 
-data Shape t raw value = Ready (t value) | Converted raw
+data Partially t raw value = Partially
+    { unPartially :: (Cofree (Shape t raw) value) }
 
-instance Functor t => Functor (Shape t raw) where
-    fmap f (Ready values) = Ready $ f <$> values
-    fmap f (Converted raw) = Converted raw
+instance Functor t => Functor (Partially t raw) where
+    fmap f (Partially structure) = Partially $ f <$> structure
 
-instance Foldable t => Foldable (Shape t raw) where
-    foldr f acc (Ready values) = foldr f acc values
-    foldr f acc (Converted raw) = acc
+instance Functor t => Bifunctor (Partially t) where
+    bimap g f (Partially (x :< Ready values)) = Partially $
+        f x :< Ready (unPartially . bimap g f . Partially <$> values)
+    bimap g f (Partially (x :< Converted raw)) = Partially $
+        f x :< (Converted $ g raw)
 
-instance Traversable t => Traversable (Shape t raw) where
-    traverse f (Ready values) = Ready <$> traverse f values
-    traverse _ (Converted raw) = pure $ Converted raw
+instance Foldable t => Bifoldable (Partially t) where
+    bifoldr g f acc (Partially (x :< Ready values)) = f x $
+        foldr (\st a -> bifoldr g f a $ Partially st) acc values
+    bifoldr g f acc (Partially (x :< Converted raw)) = f x $ g raw acc
 
-instance Functor t => Bifunctor (Shape t) where
-    bimap _ f (Ready values) = Ready $ f <$> values
-    bimap g _ (Converted raw) = Converted $ g raw
-
-instance Foldable t => Bifoldable (Shape t) where
-    bifoldr _ f acc (Ready values) = foldr f acc values
-    bifoldr g _ acc (Converted raw) = g raw acc
-
-instance Traversable t => Bitraversable (Shape t) where
-    bitraverse _ f (Ready values) = Ready <$> traverse f values
-    bitraverse g _ (Converted raw) = Converted <$> g raw
-
-type Partially t raw value = Cofree (Shape t raw) value
+instance Traversable t => Bitraversable (Partially t) where
+    bitraverse g f (Partially (x :< Ready values)) = (<$>) Partially $ (:<) <$> f x <*>
+        (Ready <$> traverse ((<$>) unPartially . bitraverse g f . Partially) values)
+    bitraverse g f (Partially (x :< Converted raw)) = (<$>) Partially $
+        (:<) <$> f x <*> (Converted <$> g raw)
