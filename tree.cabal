@@ -20,11 +20,11 @@ library
   other-modules:       Data.Shape
   build-depends:       base == 4.*, free, comonad
   default-language:    Haskell2010
-  default-extensions:  TypeSynonymInstances, ExistentialQuantification, RankNTypes, KindSignatures, DataKinds, FlexibleInstances
+  default-extensions:  ExistentialQuantification, TypeApplications
 
 executable example
   main-is:             Example/Main.hs
   build-depends:       base == 4.*, free, comonad
   other-modules:       Data.Partially, Data.Shape
   default-language:    Haskell2010
-  default-extensions:  TypeSynonymInstances, ExistentialQuantification, RankNTypes, KindSignatures, DataKinds, FlexibleInstances
+  default-extensions:  ExistentialQuantification, TypeApplications
