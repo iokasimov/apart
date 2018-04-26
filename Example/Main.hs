@@ -1,22 +1,30 @@
 import Control.Comonad.Cofree (Cofree (..))
-
-import Data.Partially (Partially (..))
-import Data.Shape (Shape (..))
-import Data.Bitraversable (bitraverse)
+import Control.Monad (void)
+import Data.Foldable (toList)
+import Data.Bitraversable (Bitraversable (..))
 import Data.Bifunctor (Bifunctor (..))
 import Data.Bifoldable (Bifoldable (..))
 import Data.Semigroup (Semigroup (..))
 
--- do nothing with Ready part, pull back Converted to Ready
-recover :: (Traversable f, Applicative g) => (raw -> g (f (Cofree f a))) -> Partially f raw a -> g (Cofree f a)
-recover convert (Partially (x :< Ready values)) = ((:<) x) <$> traverse (recover convert . Partially) values
-recover convert (Partially (x :< Converted raw)) = ((:<) x) <$> convert raw
+import Data.Splitted (Splitted (..), recover, limit)
+import Data.Shape (Shape (..))
 
 -- part of data structure in some file
-partially :: Partially Maybe FilePath Int
-partially = Partially $ 1 :< Ready (Just $ 2 :< Ready (Just $ 3 :< Converted "Example/piece.txt"))
+partially :: Splitted Maybe FilePath Int
+partially = Splitted $ 1 :< Ready (Just $ 2 :< Ready (Just $ 3 :< Converted "Example/piece.txt"))
 
 read_from_file :: FilePath -> IO (Maybe (Cofree Maybe Int))
 read_from_file fp = read @(Maybe (Cofree Maybe Int)) <$> readFile fp
 
-main = recover read_from_file partially >>= traverse (print . (<>) "Ready: " . show)
+-- the whole structure in memory
+normally :: Cofree Maybe Int
+normally = 1 :< Just (2 :< Just (3 :< Just (4 :< Just (5 :< Nothing))))
+
+save_to_file :: FilePath -> Maybe (Cofree Maybe Int) -> IO FilePath
+save_to_file fp structure = writeFile fp (show structure) *> pure fp
+
+main = do
+	print "Splitting data structure based on limit, the rest should be putted in file"
+	limit 3 (save_to_file "Example/backup.txt") normally >>= print . toList . unSplitted
+	print "Recovering data structure, the rest of structure should be in file"
+	recover read_from_file partially >>= print . toList
