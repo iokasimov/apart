@@ -1,4 +1,4 @@
-module Data.Splitted (Splitted (..), recover, limit) where
+ module Data.Splitted (Splitted (..), recover, limit) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Bifoldable (Bifoldable (..))
@@ -38,7 +38,7 @@ recover convert (Splitted (x :< Ready values)) = (:<) x <$>
 	traverse (recover convert . Splitted) values
 recover convert (Splitted (x :< Converted raw)) = (:<) x <$> convert raw
 
--- keep only a certain number of elements in memory, the rest - write to file
+-- keep only a certain number of elements in memory, do something with the rest
 limit :: (Traversable t, Applicative g) => Int -> (t (Cofree t value) -> g raw)
 	-> Cofree t value -> g (Splitted t raw value)
 limit 0 convert (x :< rest) = (Splitted . (:<) x . Converted) <$> convert rest

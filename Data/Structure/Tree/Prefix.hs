@@ -1,4 +1,4 @@
-module Data.Tree.Prefix (Prefix, Labeled (..)) where
+module Data.Structure.Tree.Prefix (Prefix, Labeled (..)) where
 
 import Control.Comonad
 import Control.Comonad.Cofree

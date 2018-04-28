@@ -18,10 +18,12 @@ source-repository head
 library
   exposed-modules:
     Data.Splitted,
-    Data.Tree.Rose,
-    Data.Tree.Binary,
-    Data.Tree.Prefix,
-    Data.Tree.Finger
+    Data.Structure.Stack,
+    Data.Structure.Stream,
+    Data.Structure.Tree.Rose,
+    Data.Structure.Tree.Binary,
+    Data.Structure.Tree.Prefix,
+    Data.Structure.Tree.Finger
   other-modules:
     Data.Shape
   build-depends:

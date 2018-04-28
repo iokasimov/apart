@@ -1,4 +1,4 @@
-module Data.Tree.Rose (Rose) where
+module Data.Structure.Tree.Rose (Rose) where
 
 import Control.Comonad.Cofree
 

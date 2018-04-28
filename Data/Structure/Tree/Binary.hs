@@ -1,4 +1,4 @@
-module Data.Tree.Binary (Binary) where
+module Data.Structure.Tree.Binary (Binary) where
 
 import Control.Comonad.Cofree
 

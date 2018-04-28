@@ -6,8 +6,9 @@ import Data.Bifunctor (Bifunctor (..))
 import Data.Bifoldable (Bifoldable (..))
 import Data.Semigroup (Semigroup (..))
 
-import Data.Splitted (Splitted (..), recover, limit)
 import Data.Shape (Shape (..))
+import Data.Splitted (Splitted (..), recover, limit)
+import Data.Structure.Stack (Stack)
 
 -- part of data structure in some file
 partially :: Splitted Maybe FilePath Int
@@ -17,7 +18,7 @@ read_from_file :: FilePath -> IO (Maybe (Cofree Maybe Int))
 read_from_file fp = read @(Maybe (Cofree Maybe Int)) <$> readFile fp
 
 -- the whole structure in memory
-normally :: Cofree Maybe Int
+normally :: Stack Int
 normally = 1 :< Just (2 :< Just (3 :< Just (4 :< Just (5 :< Nothing))))
 
 save_to_file :: FilePath -> Maybe (Cofree Maybe Int) -> IO FilePath
