@@ -39,7 +39,8 @@ library
     TypeInType,
     RankNTypes,
     TypeFamilies,
-    TypeOperators
+    TypeOperators,
+    ViewPatterns
 
 executable example
   main-is:
@@ -60,4 +61,5 @@ executable example
     TypeInType,
     RankNTypes,
     TypeFamilies,
-    TypeOperators
+    TypeOperators,
+    ViewPatterns
