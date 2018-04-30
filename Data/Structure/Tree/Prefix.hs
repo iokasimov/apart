@@ -1,8 +1,12 @@
-module Data.Structure.Tree.Prefix (Prefix, Labeled (..)) where
+module Data.Structure.Tree.Prefix (Prefix, seek) where
 
 import Control.Comonad
 import Control.Comonad.Cofree
-import Data.Foldable
+import Data.Maybe (isJust)
+import Data.Function ((&))
+import Data.Foldable (find)
+
+import Data.Structure.Stack (Stack)
 
 type Prefix s a = Cofree (Labeled s) a
 
@@ -16,3 +20,11 @@ instance Foldable (Labeled s) where
 
 instance Traversable (Labeled s) where
     traverse f (Hop s as) = Hop s <$> traverse f as
+
+seek :: Eq s => Stack s -> Prefix s v -> Maybe v
+seek keys prefix = (<$>) extract $ here prefix (extract keys) *> unwrap keys &
+    maybe (Just prefix) (\path -> find (isJust . seek path) $ unwrap prefix) where
+
+    here :: Eq s => Prefix s v -> s -> Maybe (Prefix s v)
+    here prefix@(v :< Hop s rest) k@((==) s -> True) = Just prefix
+    here _ _ = Nothing

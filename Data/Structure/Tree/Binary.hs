@@ -1,4 +1,4 @@
-module Data.Structure.Tree.Binary (Binary, insert, example) where
+module Data.Structure.Tree.Binary (Binary, insert) where
 
 import Control.Comonad.Cofree
 

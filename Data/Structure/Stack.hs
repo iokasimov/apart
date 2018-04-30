@@ -1,6 +1,6 @@
 module Data.Structure.Stack (Stack, push) where
 
-import Control.Comonad.Cofree
+import Control.Comonad.Cofree (Cofree (..), unwrap)
 
 type Stack a = Cofree Maybe a
 
