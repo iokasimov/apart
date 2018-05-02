@@ -1,4 +1,4 @@
-module Data.Structure.Stack (Stack, push) where
+module Data.Structure.Stack (Stack (..), push) where
 
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 

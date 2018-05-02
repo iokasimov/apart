@@ -1,6 +1,6 @@
-name:                splitted
+name:                apart
 version:             0.1
-description:         Splitted data structures
+description:         Get your structure and rip it apart
 homepage:            https://github.com/iokasimov/tree
 license:             BSD3
 license-file:        LICENSE
@@ -13,11 +13,11 @@ cabal-version:       >= 1.10
 
 source-repository head
   type: git
-  location: https://github.com/iokasimov/splitted.git
+  location: https://github.com/iokasimov/apart.git
 
 library
   exposed-modules:
-    Data.Splitted,
+    Data.Apart,
     Data.Structure.Stack,
     Data.Structure.Stream,
     Data.Structure.Tree.Rose,
@@ -35,9 +35,8 @@ library
     TypeApplications,
     DataKinds,
     KindSignatures,
-    PolyKinds,
-    TypeInType,
     RankNTypes,
+    TypeInType,
     TypeFamilies,
     TypeOperators,
     ViewPatterns
@@ -48,7 +47,7 @@ executable example
   build-depends:
     base == 4.*, free, comonad
   other-modules:
-    Data.Splitted,
+    Data.Apart,
     Data.Shape
   default-language:
     Haskell2010
@@ -57,9 +56,8 @@ executable example
     TypeApplications,
     DataKinds,
     KindSignatures,
-    PolyKinds,
-    TypeInType,
     RankNTypes,
+    TypeInType,
     TypeFamilies,
     TypeOperators,
     ViewPatterns
