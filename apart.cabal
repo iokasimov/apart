@@ -18,6 +18,7 @@ source-repository head
 library
   exposed-modules:
     Data.Apart,
+    Data.Structure.Graph,
     Data.Structure.Stack,
     Data.Structure.Stream,
     Data.Structure.Tree.Rose,
