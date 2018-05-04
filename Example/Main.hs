@@ -1,14 +1,7 @@
 import Control.Comonad.Cofree (Cofree (..))
-import Control.Monad (void)
-import Data.Bifoldable (Bifoldable (..))
-import Data.Bifunctor (Bifunctor (..))
-import Data.Bitraversable (Bitraversable (..))
 import Data.Foldable (toList)
-import Data.Semigroup (Semigroup (..))
 
-import Data.Apart (Apart (..), Scattered (..), Segment (..), limit, recover)
-import Data.Shape (Shape (..))
-import Data.Structure.Stack (Stack)
+import Data.Apart
 
 -- part of data structure in some file
 partially :: Scattered (Stack Int) FilePath

@@ -1,6 +1,6 @@
-module Data.Structure.Graph (Graph) where
+module Data.Apart.Structures.Graph (Graph) where
 
-import Control.Comonad.Cofree
+import Control.Comonad.Cofree (Cofree (..))
 
 -- directed acyclic graph
 type Graph a = Cofree Edge a

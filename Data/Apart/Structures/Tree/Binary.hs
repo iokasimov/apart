@@ -1,6 +1,6 @@
-module Data.Structure.Tree.Binary (Binary, insert) where
+module Data.Apart.Structures.Tree.Binary (Binary, insert) where
 
-import Control.Comonad.Cofree
+import Control.Comonad.Cofree (Cofree (..))
 
 type Binary a = Cofree Crotch a
 

@@ -1,12 +1,12 @@
-module Data.Structure.Tree.Prefix (Prefix, seek) where
+module Data.Apart.Structures.Tree.Prefix (Prefix, seek) where
 
-import Control.Comonad
-import Control.Comonad.Cofree
+import Control.Comonad (Comonad (..))
+import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Data.Maybe (isJust)
 import Data.Function ((&))
 import Data.Foldable (find)
 
-import Data.Structure.Stack (Stack)
+import Data.Apart.Structures.Stack (Stack)
 
 type Prefix s a = Cofree (Labeled s) a
 

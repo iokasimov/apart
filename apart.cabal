@@ -18,15 +18,15 @@ source-repository head
 library
   exposed-modules:
     Data.Apart,
-    Data.Structure.Graph,
-    Data.Structure.Stack,
-    Data.Structure.Stream,
-    Data.Structure.Tree.Rose,
-    Data.Structure.Tree.Binary,
-    Data.Structure.Tree.Prefix,
-    Data.Structure.Tree.Finger
+    Data.Apart.Structures.Graph,
+    Data.Apart.Structures.Stack,
+    Data.Apart.Structures.Stream,
+    Data.Apart.Structures.Tree.Rose,
+    Data.Apart.Structures.Tree.Binary,
+    Data.Apart.Structures.Tree.Prefix
   other-modules:
-    Data.Shape
+    Data.Apart.Shape
+    Data.Apart.Apart
   build-depends:
     base == 4.*, free, comonad
   default-language:
@@ -48,8 +48,7 @@ executable example
   build-depends:
     base == 4.*, free, comonad
   other-modules:
-    Data.Apart,
-    Data.Shape
+    Data.Apart
   default-language:
     Haskell2010
   default-extensions:
