@@ -8,7 +8,7 @@ import Data.Semigroup (Semigroup (..))
 
 import Data.Apart (Apart (..), Scattered (..), Segment (..), limit, recover)
 import Data.Shape (Shape (..))
-import Data.Structure.Stack (Stack (..))
+import Data.Structure.Stack (Stack)
 
 -- part of data structure in some file
 partially :: Scattered (Stack Int) FilePath

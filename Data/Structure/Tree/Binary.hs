@@ -16,8 +16,14 @@ instance Functor Crotch where
 instance Foldable Crotch where
     foldr f acc End = acc
     foldr f acc (Less l) = f l acc
-    foldr f acc (Greater r) = f r acc
-    foldr f acc (Crotch l r) = f l $ f r acc
+    foldr f acc (Greater g) = f g acc
+    foldr f acc (Crotch l g) = f l $ f g acc
+
+instance Traversable Crotch where
+    traverse f End = pure End
+    traverse f (Less x) = Less <$> f x
+    traverse f (Greater x) = Greater <$> f x
+    traverse f (Crotch l g) = Crotch <$> f l <*> f g
 
 insert :: Ord a => Binary a -> a -> Binary a
 insert (y :< End) x@((>) y -> True) = y :< Less (x :< End)
