@@ -21,7 +21,8 @@ recover convert (Apart (x :< Converted raw)) = (:<) x <$> convert raw
 -- keep only a certain number of elements in memory, do something with the rest
 limit :: (Traversable t, Applicative g) => Int -> Materializer g t raw value
     -> Cofree t value -> g (Scattered (Cofree t value) raw)
-limit 0 convert (x :< rest) = (Apart . (:<) x . Converted) <$> convert rest
+limit ((>=) 0 -> True) convert (x :< rest) = error "Limit value should be greater than 0"
+limit 1 convert (x :< rest) = (Apart . (:<) x . Converted) <$> convert rest
 limit n convert (x :< rest) = (<$>) (Apart . (:<) x . Ready) $
     ((<$>) . (<$>)) part $ traverse (limit (n - 1) convert) rest
 
