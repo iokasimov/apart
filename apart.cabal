@@ -24,6 +24,7 @@ library
     Data.Apart.Structures.Tree.Rose,
     Data.Apart.Structures.Tree.Binary,
     Data.Apart.Structures.Tree.Prefix
+    Data.Apart.Structures.Tree.AVL
   other-modules:
     Data.Apart.Shape
     Data.Apart.Apart
