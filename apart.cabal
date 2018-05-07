@@ -62,3 +62,11 @@ executable example
     TypeFamilies,
     TypeOperators,
     ViewPatterns
+
+test-suite test
+  type:
+    exitcode-stdio-1.0
+  main-is:
+    Test/Apart.hs
+  build-depends:
+    hedgehog, base
