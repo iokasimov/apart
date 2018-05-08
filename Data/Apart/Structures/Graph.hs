@@ -3,7 +3,7 @@ module Data.Apart.Structures.Graph (Graph) where
 import Control.Comonad.Cofree (Cofree (..))
 
 -- directed acyclic graph
-type Graph a = Cofree Edge a
+type Graph = Cofree Edge
 
 data Edge a = Empty | Connect a | Overlay a deriving Show
 

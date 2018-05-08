@@ -7,14 +7,14 @@ import Data.Apart
 scattered :: Scattered (Stack Int) FilePath
 scattered = Apart $ 1 :< Ready (Just $ 2 :< Ready (Just $ 3 :< Converted "Example/piece.txt"))
 
-read_from_file :: FilePath -> IO (Segment (Stack Int))
-read_from_file fp = read @(Segment (Stack Int)) <$> readFile fp
+read_from_file :: FilePath -> IO (Segment Stack Int)
+read_from_file fp = read @(Segment Stack Int) <$> readFile fp
 
 -- the whole structure in memory
 inmemory :: Stack Int
 inmemory = 1 :< Just (2 :< Just (3 :< Just (4 :< Just (5 :< Nothing))))
 
-save_to_file :: FilePath -> Segment (Stack Int) -> IO FilePath
+save_to_file :: FilePath -> Segment Stack Int -> IO FilePath
 save_to_file fp structure = writeFile fp (show structure) *> pure fp
 
 main = do

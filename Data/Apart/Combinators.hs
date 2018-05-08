@@ -6,10 +6,10 @@ import Control.Monad (join)
 import Data.Apart.Apart (Apart (..), Shape (..), Scattered (..), Segment (..))
 
 type Restorer g t raw value = (Traversable t, Applicative g) =>
-    raw -> g (Segment (Cofree t value))
+    raw -> g (Segment (Cofree t) value)
 
 type Materializer g t raw value = (Traversable t, Applicative g) =>
-    Segment (Cofree t value) -> g raw
+    Segment (Cofree t) value -> g raw
 
 -- do nothing with Ready part, pull back Converted to Ready
 recover :: (Traversable t, Applicative g) => Restorer g t raw value

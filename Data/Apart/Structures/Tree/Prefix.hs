@@ -8,7 +8,7 @@ import Data.Foldable (find)
 
 import Data.Apart.Structures.Stack (Stack)
 
-type Prefix s a = Cofree (Labeled s) a
+type Prefix s = Cofree (Labeled s)
 
 data Labeled s a = forall t . Traversable t => Hop s (t a)
 
