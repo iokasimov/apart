@@ -1,7 +1,8 @@
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Foldable (toList)
 
-import Data.Apart
+import Data.Apart (Apart (..), Shape (..), Scattered (..), Segment (..), limit, fluent, recover)
+import Data.Apart.Structures.Stack (Stack)
 
 -- part of data structure in some file
 scattered :: Scattered (Stack Int) FilePath
