@@ -22,7 +22,7 @@ Sometimes, we don’t need to hold a whole structure in memory, can it be good j
 save_to_file :: FilePath -> Segment Stack Int -> IO FilePath
 save_to_file fp structure = writeFile fp (show structure) *> pure fp
 
-scattered = IO (Scattered (Stack Int) FilePath)
+scattered = IO (Scattered Stack Int FilePath)
 scattered = limit 2 (save_to_file "part.txt") inmemory
 ```
 And our structure transformed into:
@@ -42,7 +42,7 @@ fluently = fluent print read_from_file scattered
 Return back to memory our stack of integers:
 ```haskell
 read_from_file :: FilePath -> IO (Segment Stack Int)
-read_from_file fp = read @(Segment (Stack Int)) <$> readFile fp
+read_from_file fp = read @(Segment Stack Int) <$> readFile fp
 
 inmemory :: IO (Stack Int)
 inmemory = recover read_from_file scattered
