@@ -34,5 +34,5 @@ instance Traversable t => Bitraversable (Apart t) where
 type family Segment (structure :: Type -> Type) (value :: Type) :: Type where
     Segment (Cofree t) value = t (Cofree t value)
 
-type family Scattered (structure :: Type) (raw :: Type) :: Type where
-    Scattered (Cofree t value) raw = Apart t raw value
+type family Scattered (structure :: Type -> Type) (value :: Type) (raw :: Type) :: Type where
+    Scattered (Cofree t) value raw = Apart t raw value

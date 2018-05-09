@@ -5,7 +5,7 @@ import Data.Apart (Apart (..), Shape (..), Scattered (..), Segment (..), limit, 
 import Data.Apart.Structures.Stack (Stack)
 
 -- part of data structure in some file
-scattered :: Scattered (Stack Int) FilePath
+scattered :: Scattered Stack Int FilePath
 scattered = Apart $ 1 :< Ready (Just $ 2 :< Ready (Just $ 3 :< Converted "Example/piece.txt"))
 
 read_from_file :: FilePath -> IO (Segment Stack Int)
