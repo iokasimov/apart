@@ -1,9 +1,13 @@
-import System.IO (BufferMode(..), hSetBuffering, stdout, stderr)
+module Main where
 
-import Test.Apart.Structures.Graph
-import Test.Apart.Structures.Stack
-import Test.Apart.Structures.Stream
+import System.IO (BufferMode(..), hSetBuffering, stdout, stderr)
+import Hedgehog (Group (..), checkParallel)
+
+import Test.Apart.Structures.Stack (same_length_with_origin_of_foldaway)
 
 main = do
     hSetBuffering stdout LineBuffering
     hSetBuffering stderr LineBuffering
+
+    checkParallel $ Group "Stack structure"
+        [("same_length_with_origin_of_foldaway", same_length_with_origin_of_foldaway)]

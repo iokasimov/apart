@@ -41,7 +41,8 @@ library
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns
+    ViewPatterns,
+    OverloadedStrings
 
 executable example
   main-is:
@@ -61,7 +62,8 @@ executable example
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns
+    ViewPatterns,
+    OverloadedStrings
 
 test-suite test
   type:
@@ -69,4 +71,15 @@ test-suite test
   main-is:
     Test/Apart.hs
   build-depends:
-    hedgehog, base
+    base == 4.*, free, comonad, hedgehog
+  default-extensions:
+    ExistentialQuantification,
+    TypeApplications,
+    DataKinds,
+    KindSignatures,
+    RankNTypes,
+    TypeInType,
+    TypeFamilies,
+    TypeOperators,
+    ViewPatterns,
+    OverloadedStrings
