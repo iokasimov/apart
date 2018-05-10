@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary (Binary, insert) where
+module Data.Apart.Structures.Tree.Binary (Binary, insert, height, bf, example) where
 
 import Control.Comonad.Cofree (Cofree (..))
 
@@ -35,3 +35,15 @@ insert (y :< Greater gt) x@((<) y -> True) = y :< Greater (insert gt x)
 insert (y :< Crotch lt gt) x@((>) y -> True) = y :< Crotch (insert lt x) gt
 insert (y :< Crotch lt gt) x@((<) y -> True) = y :< Crotch lt (insert gt x)
 insert binary x = binary
+
+height :: Binary a -> Int
+height (a :< End) = 1
+height (a :< Less l) = 1 + height l
+height (a :< Greater g) = 1 + height g
+height (a :< Crotch l g) = 1 + max (height l) (height g)
+
+bf :: Binary a -> Int
+bf (a :< End) = 1
+bf (a :< Less l) = 1 + bf l
+bf (a :< Greater g) = 1 + bf g
+bf (a :< Crotch l g) = abs $ (height l) - (height g)
