@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary (Binary, insert, height, bf, example) where
+module Data.Apart.Structures.Tree.Binary (Binary, insert, height, factor, rotate) where
 
 import Control.Comonad.Cofree (Cofree (..))
 
@@ -36,14 +36,27 @@ insert (y :< Crotch lt gt) x@((>) y -> True) = y :< Crotch (insert lt x) gt
 insert (y :< Crotch lt gt) x@((<) y -> True) = y :< Crotch lt (insert gt x)
 insert binary x = binary
 
+-- the way to the most remote branch
 height :: Binary a -> Int
 height (a :< End) = 1
 height (a :< Less l) = 1 + height l
 height (a :< Greater g) = 1 + height g
 height (a :< Crotch l g) = 1 + max (height l) (height g)
 
-bf :: Binary a -> Int
-bf (a :< End) = 1
-bf (a :< Less l) = 1 + bf l
-bf (a :< Greater g) = 1 + bf g
-bf (a :< Crotch l g) = abs $ (height l) - (height g)
+-- balance factor for root node
+factor :: Binary a -> Int
+factor (a :< End) = 1
+factor (a :< Less l) = 1 + factor l
+factor (a :< Greater g) = 1 + factor g
+factor (a :< Crotch l g) = abs $ (height l) - (height g)
+
+data Complexity = Simple | Double
+data Direction = Leftward | Rightward
+data Rotation a = Rotation Complexity Direction (Binary a)
+
+rotate :: Rotation a -> Binary a
+rotate (Rotation Simple Leftward (x :< Crotch a (y :< Crotch b c))) = y :< Crotch (x :< Crotch a b) c
+rotate (Rotation Simple Rightward (y :< Crotch (x :< Crotch a b) c)) = x :< Crotch a (y :< Crotch b c)
+rotate (Rotation Double Leftward (p :< Crotch a (q :< Crotch (s :< Crotch b c) d))) = s :< Crotch (p :< Crotch a b) (q :< Crotch c d)
+rotate (Rotation Double Rightward (p :< Crotch (q :< Crotch a (s :< Crotch b c)) d)) = s :< Crotch (q :< Crotch a b) (p :< Crotch c d)
+rotate (Rotation _ _ tree) = tree
