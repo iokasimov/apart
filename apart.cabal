@@ -17,21 +17,21 @@ source-repository head
 
 library
   exposed-modules:
-    Data.Apart,
+    Data.Apart
+  other-modules:
+    Data.Apart.Shape
+    Data.Apart.Apart,
+    Data.Apart.Combinators,
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,
     Data.Apart.Structures.Tree.Rose,
     Data.Apart.Structures.Tree.Binary,
-    Data.Apart.Structures.Tree.Prefix
+    Data.Apart.Structures.Tree.Prefix,
     Data.Apart.Structures.Tree.AVL
-  other-modules:
-    Data.Apart.Shape
-    Data.Apart.Apart
-  build-depends:
-    base == 4.*, free, comonad
-  default-language:
-    Haskell2010
+  build-depends: base == 4.*, free, comonad
+  default-language: Haskell2010
+  ghc-options: -fno-warn-tabs
   default-extensions:
     ExistentialQuantification,
     TypeApplications,
@@ -41,18 +41,13 @@ library
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns,
-    OverloadedStrings
+    ViewPatterns
 
 executable example
-  main-is:
-    Example/Main.hs
-  build-depends:
-    base == 4.*, free, comonad
-  other-modules:
-    Data.Apart
-  default-language:
-    Haskell2010
+  main-is: Example/Main.hs
+  build-depends: base == 4.*, free, comonad, apart
+  default-language: Haskell2010
+  ghc-options: -fno-warn-tabs
   default-extensions:
     ExistentialQuantification,
     TypeApplications,
@@ -62,16 +57,13 @@ executable example
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns,
-    OverloadedStrings
+    ViewPatterns
 
 test-suite test
-  type:
-    exitcode-stdio-1.0
-  main-is:
-    Test/Apart.hs
+  type: exitcode-stdio-1.0
+  main-is: Test/Apart.hs
   build-depends:
-    base == 4.*, free, comonad, hedgehog
+    base == 4.*, free, comonad, hedgehog, apart
   default-extensions:
     ExistentialQuantification,
     TypeApplications,
@@ -83,3 +75,4 @@ test-suite test
     TypeOperators,
     ViewPatterns,
     OverloadedStrings
+  ghc-options: -fno-warn-tabs
