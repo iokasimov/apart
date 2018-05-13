@@ -8,6 +8,7 @@ import Data.Kind (Type)
 
 import Data.Apart.Shape (Shape (..))
 
+-- | Structure with scattered segments
 data Apart t raw value = Apart
 	{ part :: (Cofree (Shape t raw) value) }
 
