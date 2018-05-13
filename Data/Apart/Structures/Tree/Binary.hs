@@ -1,4 +1,6 @@
-module Data.Apart.Structures.Tree.Binary (Binary, insert, height, factor, rotate) where
+module Data.Apart.Structures.Tree.Binary
+	(Binary, Crotch (..), Complexity (..), Direction (..), Rotation (..)
+	, insert, height, factor, rotate) where
 
 import Control.Comonad.Cofree (Cofree (..))
 

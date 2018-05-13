@@ -17,11 +17,7 @@ source-repository head
 
 library
   exposed-modules:
-    Data.Apart
-  other-modules:
-    Data.Apart.Shape
-    Data.Apart.Apart,
-    Data.Apart.Combinators,
+    Data.Apart,
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,
@@ -29,11 +25,16 @@ library
     Data.Apart.Structures.Tree.Binary,
     Data.Apart.Structures.Tree.Prefix,
     Data.Apart.Structures.Tree.AVL
+  other-modules:
+    Data.Apart.Apart,
+    Data.Apart.Shape,
+    Data.Apart.Combinators
   build-depends: base == 4.*, free, comonad
   default-language: Haskell2010
   ghc-options: -fno-warn-tabs
   default-extensions:
     ExistentialQuantification,
+    LambdaCase
     TypeApplications,
     DataKinds,
     KindSignatures,
@@ -62,17 +63,8 @@ executable example
 test-suite test
   type: exitcode-stdio-1.0
   main-is: Test/Apart.hs
-  build-depends:
-    base == 4.*, free, comonad, hedgehog, apart
+  build-depends: base == 4.*, free, comonad, hedgehog, apart
+  default-language: Haskell2010
   default-extensions:
-    ExistentialQuantification,
-    TypeApplications,
-    DataKinds,
-    KindSignatures,
-    RankNTypes,
-    TypeInType,
-    TypeFamilies,
-    TypeOperators,
-    ViewPatterns,
     OverloadedStrings
   ghc-options: -fno-warn-tabs
