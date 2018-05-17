@@ -29,7 +29,7 @@ library
     Data.Apart.Apart,
     Data.Apart.Shape,
     Data.Apart.Combinators
-  build-depends: base == 4.*, free, comonad
+  build-depends: base == 4.*, free, comonad, lens
   default-language: Haskell2010
   ghc-options: -fno-warn-tabs
   default-extensions:
