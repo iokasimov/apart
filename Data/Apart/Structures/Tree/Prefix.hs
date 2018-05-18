@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Prefix (Prefix, seek, example, insert) where
+module Data.Apart.Structures.Tree.Prefix (Prefix, seek, insert) where
 
 import Control.Applicative (Alternative (..))
 import Control.Comonad (Comonad (..))
