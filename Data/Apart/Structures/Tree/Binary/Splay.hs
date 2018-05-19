@@ -1,7 +1,7 @@
-module Data.Apart.Structures.Tree.AVL (AVL) where
+module Data.Apart.Structures.Tree.Binary.Splay (Splay) where
 
 import Control.Comonad.Cofree (Cofree (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary)
 
-type AVL = Binary
+type Splay = Binary
