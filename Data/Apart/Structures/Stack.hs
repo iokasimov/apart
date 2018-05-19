@@ -1,6 +1,6 @@
 module Data.Apart.Structures.Stack (Stack, insert, foldaway) where
 
-import Control.Comonad.Cofree (Cofree (..), unwrap)
+import Control.Comonad.Cofree (Cofree (..))
 
 import Data.Apart.Apart (Segment (..))
 
