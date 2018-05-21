@@ -64,8 +64,18 @@ executable example
 test-suite test
   type: exitcode-stdio-1.0
   main-is: Test/Apart.hs
-  build-depends: base == 4.*, free, comonad, hedgehog, apart
+  build-depends: base == 4.*, free, comonad, lens, hedgehog, apart
   default-language: Haskell2010
   default-extensions:
-    OverloadedStrings
+    OverloadedStrings,
+    ExistentialQuantification,
+    LambdaCase
+    TypeApplications,
+    DataKinds,
+    KindSignatures,
+    RankNTypes,
+    TypeInType,
+    TypeFamilies,
+    TypeOperators,
+    ViewPatterns
   ghc-options: -fno-warn-tabs

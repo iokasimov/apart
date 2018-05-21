@@ -1,4 +1,5 @@
-module Test.Apart.Structures.Stack (same_length_with_origin_of_foldaway) where
+module Test.Apart.Structures.Stack
+	(same_length_with_origin_of_foldaway) where
 
 import Data.Function ((&))
 import Hedgehog (Property (..), Gen (..), forAll, (===), property)

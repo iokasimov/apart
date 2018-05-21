@@ -1,7 +1,9 @@
 module Data.Apart.Structures.Tree.Binary.Internal
-	( Binary, Crotch (..), insert, height) where
+	( Binary, Crotch (..)
+	, less, greater, singleton, insert, height) where
 
 import Control.Comonad.Cofree (Cofree (..))
+import Control.Lens (Prism', prism')
 
 type Binary = Cofree Crotch
 
@@ -25,6 +27,21 @@ instance Traversable Crotch where
 	traverse f (Less x) = Less <$> f x
 	traverse f (Greater x) = Greater <$> f x
 	traverse f (Crotch l g) = Crotch <$> f l <*> f g
+
+less :: Prism' (Binary a) (Binary a)
+less = prism' id $ \case
+	(x :< Crotch ls gt) -> Just ls
+	(x :< Less ls) -> Just ls
+	_ -> Nothing
+
+greater :: Prism' (Binary a) (Binary a)
+greater = prism' id $ \case
+	(x :< Crotch ls gt) -> Just gt
+	(x :< Greater ls) -> Just ls
+	_ -> Nothing
+
+singleton :: a -> Binary a
+singleton x = x :< End
 
 insert :: Ord a => Binary a -> a -> Binary a
 insert (y :< End) x@((>) y -> True) = y :< Less (x :< End)
