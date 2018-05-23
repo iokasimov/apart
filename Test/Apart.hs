@@ -5,6 +5,7 @@ import Hedgehog (Group (..), checkParallel)
 
 import Test.Apart.Structures.Stack
 import Test.Apart.Structures.Tree.Binary
+import Test.Apart.Structures.Tree.Binary.AVL
 
 main = do
 	hSetBuffering stdout LineBuffering
@@ -20,4 +21,9 @@ main = do
 		, any_value_in_left_subtree_less_than_root_value ),
 		( "Any value in right subtree greater than root value"
 		, any_value_in_right_subtree_greater_than_root_value )
+		]
+
+	checkParallel $ Group "AVL tree structure" [
+		( "Balance factor less than 1"
+		, balance_factor_less_than_1 )
 		]

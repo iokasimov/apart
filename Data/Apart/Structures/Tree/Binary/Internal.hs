@@ -1,6 +1,6 @@
 module Data.Apart.Structures.Tree.Binary.Internal
 	( Binary, Crotch (..)
-	, less, greater, singleton, insert, height) where
+	, less, greater, singleton, insert, height, factor) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Lens (Prism', prism')
@@ -60,3 +60,10 @@ height (a :< End) = 1
 height (a :< Less l) = 1 + height l
 height (a :< Greater g) = 1 + height g
 height (a :< Crotch l g) = 1 + max (height l) (height g)
+
+-- balance factor for root node
+factor :: Binary a -> Int
+factor (a :< End) = 1
+factor (a :< Less l) = (1 + factor l) - 1
+factor (a :< Greater g) = (1 + factor g) - 1
+factor (a :< Crotch l g) = (height l) - (height g)
