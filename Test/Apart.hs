@@ -24,6 +24,6 @@ main = do
 		]
 
 	checkParallel $ Group "AVL tree structure" [
-		( "Balance factor less than 1"
-		, balance_factor_less_than_1 )
+		( "Balance factor is well"
+		, balance_factor_is_well )
 		]

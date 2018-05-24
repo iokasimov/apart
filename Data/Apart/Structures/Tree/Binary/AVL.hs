@@ -1,5 +1,6 @@
-module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert) where
+module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert, example) where
 
+import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Lens ((^?))
@@ -29,7 +30,7 @@ simple_left_condition = divide (id &&& id)
 
 simple_right_condition :: Predicate (Binary a)
 simple_right_condition = divide (id &&& id)
-	gl_LT_or_EQ_gg l_height_diff_2_g
+	lg_LT_or_EQ_ll l_height_diff_2_g
 
 double_left_condition :: Predicate (Binary a)
 double_left_condition = divide (id &&& id)
@@ -37,18 +38,18 @@ double_left_condition = divide (id &&& id)
 
 double_right_condition :: Predicate (Binary a)
 double_right_condition = divide (id &&& id)
-	gl_LT_or_EQ_gg lg_GT_ll
+	lg_LT_or_EQ_ll lg_GT_ll
 
 gl_LT_or_EQ_gg :: Predicate (Binary a)
 gl_LT_or_EQ_gg = Predicate $
 	\t -> maybe False id $ (<=)
-		<$> (height <$> t ^? greater . less)
+		<$> (height <$> t ^? greater . less <|> pure 0)
 		<*> (height <$> t ^? greater . greater)
 
 lg_LT_or_EQ_ll :: Predicate (Binary a)
 lg_LT_or_EQ_ll = Predicate $
 	\t -> maybe False id $ (<=)
-		<$> (height <$> t ^? less . greater)
+		<$> (height <$> t ^? less . greater <|> pure 0)
 		<*> (height <$> t ^? less . less)
 
 gl_GT_gg :: Predicate (Binary a)
@@ -78,10 +79,11 @@ data Complexity = I | II
 data Rotation = Rotation Complexity Direction
 
 rotate :: Rotation -> Binary a -> Binary a
-rotate (Rotation I L) tree@(a :< Crotch l (b :< Crotch c r)) =
-	b :< Crotch (a :< Crotch l c) r
-rotate (Rotation I R) (a :< Crotch (b :< Crotch l c) r) =
-	b :< Crotch l (a :< Crotch c r)
+rotate (Rotation I L) tree@(a :< Crotch l (b :< Crotch c r)) = b :< Crotch (a :< Crotch l c) r
+rotate (Rotation I L) tree@(a :< Crotch l (b :< Greater r)) = b :< Crotch (a :< Less l) r
+rotate (Rotation I R) (a :< Crotch (b :< Crotch l c) r) = b :< Crotch l (a :< Crotch c r)
+rotate (Rotation I R) (a :< Crotch (b :< Less l) r) = b :< Crotch l (a :< Greater r)
+
 rotate (Rotation II L) (a :< Crotch l (b :< Crotch (c :< Crotch m n) r)) =
 	c :< Crotch (a :< Crotch l m) (b :< Crotch n r)
 rotate (Rotation II R) (a :< Crotch (b :< Crotch l (c :< Crotch m n)) r) =
