@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert, example) where
+module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert) where
 
 import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))

@@ -21,6 +21,8 @@ library
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,
+    Data.Apart.Structures.Tree.T23,
+    Data.Apart.Structures.Tree.T234,
     Data.Apart.Structures.Tree.Rose,
     Data.Apart.Structures.Tree.Prefix,
     Data.Apart.Structures.Tree.Binary,
