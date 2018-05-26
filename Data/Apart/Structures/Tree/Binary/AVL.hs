@@ -30,7 +30,7 @@ simple_left_condition = divide (id &&& id)
 
 simple_right_condition :: Predicate (Binary a)
 simple_right_condition = divide (id &&& id)
-	lg_LT_or_EQ_ll l_height_diff_2_g
+	lg_GT_or_EQ_ll l_height_diff_2_g
 
 double_left_condition :: Predicate (Binary a)
 double_left_condition = divide (id &&& id)
@@ -38,41 +38,41 @@ double_left_condition = divide (id &&& id)
 
 double_right_condition :: Predicate (Binary a)
 double_right_condition = divide (id &&& id)
-	lg_LT_or_EQ_ll lg_GT_ll
+	lg_GT_or_EQ_ll lg_GT_ll
 
 gl_LT_or_EQ_gg :: Predicate (Binary a)
 gl_LT_or_EQ_gg = Predicate $
 	\t -> maybe False id $ (<=)
 		<$> (height <$> t ^? greater . less <|> pure 0)
-		<*> (height <$> t ^? greater . greater)
+		<*> (height <$> t ^? greater . greater <|> pure 0)
 
-lg_LT_or_EQ_ll :: Predicate (Binary a)
-lg_LT_or_EQ_ll = Predicate $
-	\t -> maybe False id $ (<=)
+lg_GT_or_EQ_ll :: Predicate (Binary a)
+lg_GT_or_EQ_ll = Predicate $
+	\t -> maybe False id $ (>=)
 		<$> (height <$> t ^? less . greater <|> pure 0)
-		<*> (height <$> t ^? less . less)
+		<*> (height <$> t ^? less . less <|> pure 0)
 
 gl_GT_gg :: Predicate (Binary a)
 gl_GT_gg = Predicate $ \t -> maybe False id $ (>)
-	<$> (height <$> t ^? greater . less)
-	<*> (height <$> t ^? greater . greater)
+	<$> (height <$> t ^? greater . less <|> pure 0)
+	<*> (height <$> t ^? greater . greater <|> pure 0)
 
 lg_GT_ll :: Predicate (Binary a)
 lg_GT_ll = Predicate $ \t -> maybe False id $ (>)
-	<$> (height <$> t ^? less . greater)
-	<*> (height <$> t ^? less . less)
+	<$> (height <$> t ^? less . greater <|> pure 0)
+	<*> (height <$> t ^? less . less <|> pure 0)
 
 g_height_diff_2_l :: Predicate (Binary a)
 g_height_diff_2_l = Predicate $
 	\t -> maybe False (==2) $ (-)
-		<$> (height <$> t ^? greater)
-		<*> (height <$> t ^? less)
+		<$> (height <$> t ^? greater <|> pure 0)
+		<*> (height <$> t ^? less <|> pure 0)
 
 l_height_diff_2_g :: Predicate (Binary a)
 l_height_diff_2_g = Predicate $
 	\t -> maybe False (==2) $ (-)
-		<$> (height <$> t ^? less)
-		<*> (height <$> t ^? greater)
+		<$> (height <$> t ^? less <|> pure 0)
+		<*> (height <$> t ^? greater <|> pure 0)
 
 data Direction = L | R
 data Complexity = I | II
@@ -81,11 +81,18 @@ data Rotation = Rotation Complexity Direction
 rotate :: Rotation -> Binary a -> Binary a
 rotate (Rotation I L) tree@(a :< Crotch l (b :< Crotch c r)) = b :< Crotch (a :< Crotch l c) r
 rotate (Rotation I L) tree@(a :< Crotch l (b :< Greater r)) = b :< Crotch (a :< Less l) r
+rotate (Rotation I L) tree@(a :< Greater (b :< Greater r)) = b :< Crotch (a :< End) r
+
 rotate (Rotation I R) (a :< Crotch (b :< Crotch l c) r) = b :< Crotch l (a :< Crotch c r)
 rotate (Rotation I R) (a :< Crotch (b :< Less l) r) = b :< Crotch l (a :< Greater r)
+rotate (Rotation I R) (a :< Less (b :< Less l)) = b :< Crotch l (a :< End)
 
 rotate (Rotation II L) (a :< Crotch l (b :< Crotch (c :< Crotch m n) r)) =
 	c :< Crotch (a :< Crotch l m) (b :< Crotch n r)
+
 rotate (Rotation II R) (a :< Crotch (b :< Crotch l (c :< Crotch m n)) r) =
 	c :< Crotch (b :< Crotch l m) (a :< Crotch n r)
-rotate (Rotation _ _) tree = tree
+rotate (Rotation II R) (a :< Less (b :< Greater (c :< End))) =
+	c :< Crotch (b :< End) (a :< End)
+
+rotate _ tree = tree
