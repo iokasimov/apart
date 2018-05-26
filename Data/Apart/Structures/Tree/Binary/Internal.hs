@@ -4,10 +4,47 @@ module Data.Apart.Structures.Tree.Binary.Internal
 
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Lens (Prism', prism')
+import Data.Functor.Apply (Apply (..))
+import Data.Functor.Alt (Alt (..))
+import Data.Semigroup (Semigroup (..))
+
+import Data.Apart.Apart (Segment (..))
 
 type Binary = Cofree Crotch
 
 data Crotch a = End | Less a | Greater a | Crotch a a deriving Show
+
+instance Semigroup (Crotch a) where
+	End <> x = x
+	Less x <> Less y = Less x
+	Greater x <> Greater y = Greater x
+	Less x <> Greater y = Crotch x y
+	Greater y <> Less x = Crotch x y
+	Crotch x y <> _ = Crotch x y
+	_ <> End = End
+
+instance Apply Crotch where
+	End <.> _ = End
+	_ <.> End = End
+	Less f <.> Less x = Less $ f x
+	Less f <.> Greater x = Less $ f x
+	Less f <.> Crotch x y = Greater $ f y
+	Greater f <.> Greater x = Greater $ f x
+	Greater f <.> Less x = Greater $ f x
+	Greater f <.> Crotch x y = Greater $ f x
+	Crotch f g <.> Less x = Less $ f x
+	Crotch f g <.> Greater x = Greater $ g x
+	Crotch f g <.> Crotch x y = Crotch (f x) (g y)
+
+instance Alt Crotch where
+	End <!> x = x
+	x <!> End = x
+	Less x <!> Greater y = Crotch x y
+	Less x <!> y = y
+	Greater y <!> Less x = Crotch x y
+	Greater y <!> x = x
+	Crotch x y <!> _ = Crotch x y
+	_ <!> Crotch x y = Crotch x y
 
 instance Functor Crotch where
 	fmap f End = End

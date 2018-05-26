@@ -32,7 +32,7 @@ library
     Data.Apart.Apart,
     Data.Apart.Shape,
     Data.Apart.Combinators
-  build-depends: base == 4.*, free, comonad, lens, contravariant
+  build-depends: base == 4.*, free, comonad, lens, contravariant, semigroupoids
   default-language: Haskell2010
   ghc-options: -fno-warn-tabs
   default-extensions:
