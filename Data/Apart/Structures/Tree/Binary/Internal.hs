@@ -1,6 +1,5 @@
 module Data.Apart.Structures.Tree.Binary.Internal
-	( Binary, Crotch (..)
-	, less, greater, ls, gt, singleton, insert, height, factor) where
+	( Binary, Crotch (..), ls, gt, singleton, insert, height, factor) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Lens (Prism', prism')
@@ -45,7 +44,6 @@ instance Alt Crotch where
 	Greater y <!> Less x = Crotch x y
 	Greater y <!> x = x
 	Crotch x y <!> _ = Crotch x y
-	_ <!> Crotch x y = Crotch x y
 
 instance Bind Crotch where
 	End >>- f = End
@@ -81,18 +79,6 @@ gt :: Binary a -> Segment Binary a
 gt (_ :< Greater x) = Greater x
 gt (_ :< Crotch _ x) = Greater x
 gt (_ :< _) = End
-
-less :: Prism' (Binary a) (Binary a)
-less = prism' id $ \case
-	(x :< Crotch ls gt) -> Just ls
-	(x :< Less ls) -> Just ls
-	_ -> Nothing
-
-greater :: Prism' (Binary a) (Binary a)
-greater = prism' id $ \case
-	(x :< Crotch ls gt) -> Just gt
-	(x :< Greater ls) -> Just ls
-	_ -> Nothing
 
 singleton :: a -> Binary a
 singleton x = x :< End

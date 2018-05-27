@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert) where
+module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert, example, gl_LT_or_EQ_gg) where
 
 import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))
@@ -11,12 +11,16 @@ import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 import Data.Typeable
 
-import Data.Apart.Structures.Tree.Binary (Binary)
 import Data.Apart.Apart (Segment (..))
-import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..), less, greater, ls, gt, height)
+import Data.Apart.Structures.Tree.Binary (Binary)
+import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..), ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary.Internal as Binary (insert)
 
 type AVL = Binary
+
+example :: Binary Int
+example = 5 :< Crotch (4 :< End)
+	(6 :< Crotch (3 :< End) (7 :< End))
 
 insert :: Ord a => a -> AVL a -> Segment AVL a
 insert x tree = balancing $ Binary.insert tree x
@@ -59,35 +63,31 @@ double_right_condition = divide (id &&& id)
 	lg_GT_or_EQ_ll lg_GT_ll
 
 gl_LT_or_EQ_gg :: Predicate (Binary a)
-gl_LT_or_EQ_gg = Predicate $
-	\t -> maybe False id $ (<=)
-		<$> (height <$> t ^? greater . less <|> pure 0)
-		<*> (height <$> t ^? greater . greater <|> pure 0)
+gl_LT_or_EQ_gg = Predicate $ \t -> (<=)
+	(foldr (id . const) 0 $ height <$> (gt t >>- ls))
+	(foldr (id . const) 0 $ height <$> (gt t >>- gt))
 
 lg_GT_or_EQ_ll :: Predicate (Binary a)
-lg_GT_or_EQ_ll = Predicate $
-	\t -> maybe False id $ (>=)
-		<$> (height <$> t ^? less . greater <|> pure 0)
-		<*> (height <$> t ^? less . less <|> pure 0)
+lg_GT_or_EQ_ll = Predicate $ \t -> (>=)
+	(foldr (id . const) 0 $ height <$> (ls t >>- gt))
+	(foldr (id . const) 0 $ height <$> (ls t >>- ls))
 
 gl_GT_gg :: Predicate (Binary a)
-gl_GT_gg = Predicate $ \t -> maybe False id $ (>)
-	<$> (height <$> t ^? greater . less <|> pure 0)
-	<*> (height <$> t ^? greater . greater <|> pure 0)
+gl_GT_gg = Predicate $ \t -> (>)
+	(foldr (id . const) 0 $ height <$> (gt t >>- ls))
+	(foldr (id . const) 0 $ height <$> (gt t >>- gt))
 
 lg_GT_ll :: Predicate (Binary a)
-lg_GT_ll = Predicate $ \t -> maybe False id $ (>)
-	<$> (height <$> t ^? less . greater <|> pure 0)
-	<*> (height <$> t ^? less . less <|> pure 0)
+lg_GT_ll = Predicate $ \t -> (>)
+	(foldr (id . const) 0 $ height <$> (ls t >>- gt))
+	(foldr (id . const) 0 $ height <$> (ls t >>- ls))
 
 g_height_diff_2_l :: Predicate (Binary a)
-g_height_diff_2_l = Predicate $
-	\t -> maybe False (==2) $ (-)
-		<$> (height <$> t ^? greater <|> pure 0)
-		<*> (height <$> t ^? less <|> pure 0)
+g_height_diff_2_l = Predicate $ \t -> (== 2) $ (-)
+	(foldr (id . const) 0 $ height <$> gt t)
+	(foldr (id . const) 0 $ height <$> ls t)
 
 l_height_diff_2_g :: Predicate (Binary a)
-l_height_diff_2_g = Predicate $
-	\t -> maybe False (==2) $ (-)
-		<$> (height <$> t ^? less <|> pure 0)
-		<*> (height <$> t ^? greater <|> pure 0)
+l_height_diff_2_g = Predicate $ \t -> (== 2) $ (-)
+	(foldr (id . const) 0 $ height <$> ls t)
+	(foldr (id . const) 0 $ height <$> gt t)
