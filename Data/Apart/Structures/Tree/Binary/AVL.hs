@@ -2,27 +2,45 @@ module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert) where
 
 import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))
+import Control.Comonad (Comonad (..))
 import Control.Comonad.Cofree (Cofree (..))
-import Control.Lens ((^?))
+import Control.Lens ((^?), (<&>))
 import Data.Functor.Contravariant (Predicate (..))
 import Data.Functor.Contravariant.Divisible (Divisible (..))
+import Data.Functor.Bind (Bind (..))
+import Data.Semigroup (Semigroup (..))
+import Data.Typeable
 
 import Data.Apart.Structures.Tree.Binary (Binary)
-
-import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..), less, greater, height)
+import Data.Apart.Apart (Segment (..))
+import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..), less, greater, ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary.Internal as Binary (insert)
 
 type AVL = Binary
 
-insert :: Ord a => a -> AVL a -> AVL a
+insert :: Ord a => a -> AVL a -> Segment AVL a
 insert x tree = balancing $ Binary.insert tree x
 
-balancing :: Binary a -> AVL a
-balancing tree@(getPredicate simple_left_condition -> True) = rotate (Rotation I L) tree
-balancing tree@(getPredicate simple_right_condition -> True) = rotate (Rotation I R) tree
-balancing tree@(getPredicate double_left_condition -> True) = rotate (Rotation II L) tree
-balancing tree@(getPredicate double_right_condition -> True) = rotate (Rotation II R) tree
-balancing tree = tree
+-- | There is a trick, after each insert we know the last rotate direction
+balancing :: Binary a -> Segment AVL a
+balancing t@(getPredicate simple_left_condition -> True) = rtt (Rotate I L) t
+balancing t@(getPredicate simple_right_condition -> True) = rtt (Rotate I R) t
+balancing t@(getPredicate double_left_condition -> True) = rtt (Rotate II L) t
+balancing t@(getPredicate double_right_condition -> True) = rtt (Rotate II R) t
+
+data Direction = L | R
+data Complexity = I | II
+data Rotate = Rotate Complexity Direction
+
+rtt :: Rotate -> Binary a -> Segment Binary a
+rtt (Rotate I L) t = (<&>) (extract <$> ls t) $ flip (:<)
+	$ (Less $ (extract t) :< (ls t <> (gt t >>- ls))) <> (gt t >>- gt)
+rtt (Rotate I R) t = (<&>) (extract <$> gt t) $ flip (:<) $
+	(Greater $ (extract t) :< ((ls t >>- gt ) <> gt t)) <> (ls t >>- ls)
+rtt (Rotate II L) t = gt t >>- rtt (Rotate I L) .
+	(:<) (extract t) . (<>) (ls t) . rtt (Rotate I R)
+rtt (Rotate II R) t = ls t >>- rtt (Rotate I R) .
+	(:<) (extract t) . (<>) (gt t) . rtt (Rotate I L)
 
 simple_left_condition :: Predicate (Binary a)
 simple_left_condition = divide (id &&& id)
@@ -73,26 +91,3 @@ l_height_diff_2_g = Predicate $
 	\t -> maybe False (==2) $ (-)
 		<$> (height <$> t ^? less <|> pure 0)
 		<*> (height <$> t ^? greater <|> pure 0)
-
-data Direction = L | R
-data Complexity = I | II
-data Rotation = Rotation Complexity Direction
-
-rotate :: Rotation -> Binary a -> Binary a
-rotate (Rotation I L) tree@(a :< Crotch l (b :< Crotch c r)) = b :< Crotch (a :< Crotch l c) r
-rotate (Rotation I L) tree@(a :< Crotch l (b :< Greater r)) = b :< Crotch (a :< Less l) r
-rotate (Rotation I L) tree@(a :< Greater (b :< Greater r)) = b :< Crotch (a :< End) r
-
-rotate (Rotation I R) (a :< Crotch (b :< Crotch l c) r) = b :< Crotch l (a :< Crotch c r)
-rotate (Rotation I R) (a :< Crotch (b :< Less l) r) = b :< Crotch l (a :< Greater r)
-rotate (Rotation I R) (a :< Less (b :< Less l)) = b :< Crotch l (a :< End)
-
-rotate (Rotation II L) (a :< Crotch l (b :< Crotch (c :< Crotch m n) r)) =
-	c :< Crotch (a :< Crotch l m) (b :< Crotch n r)
-
-rotate (Rotation II R) (a :< Crotch (b :< Crotch l (c :< Crotch m n)) r) =
-	c :< Crotch (b :< Crotch l m) (a :< Crotch n r)
-rotate (Rotation II R) (a :< Less (b :< Greater (c :< End))) =
-	c :< Crotch (b :< End) (a :< End)
-
-rotate _ tree = tree

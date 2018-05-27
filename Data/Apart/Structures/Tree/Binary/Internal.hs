@@ -1,11 +1,12 @@
 module Data.Apart.Structures.Tree.Binary.Internal
 	( Binary, Crotch (..)
-	, less, greater, singleton, insert, height, factor) where
+	, less, greater, ls, gt, singleton, insert, height, factor) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Lens (Prism', prism')
 import Data.Functor.Apply (Apply (..))
 import Data.Functor.Alt (Alt (..))
+import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
 import Data.Apart.Apart (Segment (..))
@@ -46,6 +47,12 @@ instance Alt Crotch where
 	Crotch x y <!> _ = Crotch x y
 	_ <!> Crotch x y = Crotch x y
 
+instance Bind Crotch where
+	End >>- f = End
+	Less x >>- f = f x
+	Greater x >>- f = f x
+	Crotch x y >>- f = f x <> f y
+
 instance Functor Crotch where
 	fmap f End = End
 	fmap f (Less l) = Less $ f l
@@ -64,6 +71,16 @@ instance Traversable Crotch where
 	traverse f (Less x) = Less <$> f x
 	traverse f (Greater x) = Greater <$> f x
 	traverse f (Crotch l g) = Crotch <$> f l <*> f g
+
+ls :: Binary a -> Segment Binary a
+ls (_ :< Less x) = Less x
+ls (_ :< Crotch x _) = Less x
+ls (_ :< _) = End
+
+gt :: Binary a -> Segment Binary a
+gt (_ :< Greater x) = Greater x
+gt (_ :< Crotch _ x) = Greater x
+gt (_ :< _) = End
 
 less :: Prism' (Binary a) (Binary a)
 less = prism' id $ \case
