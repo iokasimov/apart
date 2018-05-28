@@ -13,17 +13,12 @@ main = do
 
 	checkParallel $ Group "Stack structure" [
 		( "Same length with origin of foldaway"
-		, same_length_with_origin_of_foldaway )
-		]
+		, same_length_with_origin_of_foldaway )]
 
 	checkParallel $ Group "Binary tree structure" [
-		( "Any value in left subtree less than root value"
-		, any_value_in_left_subtree_less_than_root_value ),
-		( "Any value in right subtree greater than root value"
-		, any_value_in_right_subtree_greater_than_root_value )
-		]
+		( "Any left left is less, any right is greater"
+		, any_left_left_is_less_any_right_is_greater )]
 
 	checkParallel $ Group "AVL tree structure" [
 		( "Balance factor is well"
-		, balance_factor_is_well )
-		]
+		, balance_factor_is_well )]

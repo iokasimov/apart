@@ -4,16 +4,14 @@ module Test.Apart.Structures.Tree.Binary.AVL
 import Hedgehog (Property (..), Gen (..), forAll, (===), property, assert, failure)
 import Hedgehog.Gen (enumBounded, list)
 import Hedgehog.Range (linear)
+import Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, singleton, factor)
 import Data.Apart.Structures.Tree.Binary.AVL (AVL, insert)
-
-gen_singleton_binary_tree :: Gen (Binary Int)
-gen_singleton_binary_tree = singleton <$> enumBounded
+import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..))
 
 balance_factor_is_well :: Property
 balance_factor_is_well = property $ do
 	xs <- forAll $ list (linear 0 100) (enumBounded :: Gen Int)
-	binary <- forAll $ gen_singleton_binary_tree
-	let inserted = foldr insert binary xs
-	assert $ -1 <= factor inserted && factor inserted <= 1
+	let inserted = foldr (\el t -> t >>- insert el) End xs
+	assert $ foldr (\t _ -> -1 <= factor t && factor t <= 1) True inserted
