@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Graph (Graph, isolated, star, remove) where
+module Data.Apart.Structures.Graph (Graph, Edge (..), isolated, star, remove) where
 
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Control.Comonad (Comonad (..))

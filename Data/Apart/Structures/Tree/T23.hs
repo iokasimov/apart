@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.T23 (T23) where
+module Data.Apart.Structures.Tree.T23 (T23, N23 (..)) where
 
 import Control.Comonad.Cofree (Cofree (..))
 
