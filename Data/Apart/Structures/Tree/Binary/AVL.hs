@@ -1,20 +1,14 @@
 module Data.Apart.Structures.Tree.Binary.AVL (AVL, insert) where
 
-import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))
-import Control.Comonad (Comonad (..))
-import Control.Comonad.Cofree (Cofree (..))
-import Control.Lens ((^?), (<&>))
 import Data.Functor.Contravariant (Predicate (..))
 import Data.Functor.Contravariant.Divisible (Divisible (..))
 import Data.Functor.Bind (Bind (..))
-import Data.Semigroup (Semigroup (..))
-import Data.Typeable
 
 import Data.Apart.Apart (Segment (..))
-import Data.Apart.Structures.Tree.Binary (Binary)
-import Data.Apart.Structures.Tree.Binary.Internal (Crotch (..), ls, gt, height)
-import qualified Data.Apart.Structures.Tree.Binary.Internal as Binary (insert)
+import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), ls, gt, height)
+import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
+import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), Direction (..), Complexity (..), rtt)
 
 type AVL = Binary
 
@@ -27,20 +21,6 @@ balancing t@(getPredicate simple_left -> True) = rtt (Rotate I L) t
 balancing t@(getPredicate simple_right -> True) = rtt (Rotate I R) t
 balancing t@(getPredicate double_left -> True) = rtt (Rotate II L) t
 balancing t@(getPredicate double_right -> True) = rtt (Rotate II R) t
-
-data Direction = L | R
-data Complexity = I | II
-data Rotate = Rotate Complexity Direction
-
-rtt :: Rotate -> Binary a -> Segment AVL a
-rtt (Rotate I L) t = (<&>) (extract <$> ls t) $ flip (:<)
-	$ (Less $ (extract t) :< (ls t <> (gt t >>- ls))) <> (gt t >>- gt)
-rtt (Rotate I R) t = (<&>) (extract <$> gt t) $ flip (:<) $
-	(Greater $ (extract t) :< ((ls t >>- gt ) <> gt t)) <> (ls t >>- ls)
-rtt (Rotate II L) t = gt t >>- rtt (Rotate I L) .
-	(:<) (extract t) . (<>) (ls t) . rtt (Rotate I R)
-rtt (Rotate II R) t = ls t >>- rtt (Rotate I R) .
-	(:<) (extract t) . (<>) (gt t) . rtt (Rotate I L)
 
 subheight :: Segment Binary a -> Int
 subheight = foldr (\t _ -> height t) 0
