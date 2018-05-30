@@ -8,19 +8,18 @@ import Data.Functor.Bind (Bind (..))
 import Data.Apart.Apart (Segment (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
-import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), Direction (..), Complexity (..), rtt)
+import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
 type AVL = Binary
 
 insert :: Ord a => a -> AVL a -> Segment AVL a
 insert x tree = balancing $ Binary.insert tree x
 
--- | There is a trick, after each insert we know the last rotate direction
 balancing :: Binary a -> Segment AVL a
-balancing t@(getPredicate simple_left -> True) = rtt (Rotate I L) t
-balancing t@(getPredicate simple_right -> True) = rtt (Rotate I R) t
-balancing t@(getPredicate double_left -> True) = rtt (Rotate II L) t
-balancing t@(getPredicate double_right -> True) = rtt (Rotate II R) t
+balancing t@(getPredicate simple_left -> True) = rtt L t
+balancing t@(getPredicate simple_right -> True) = rtt R t
+balancing t@(getPredicate double_left -> True) = rtt RL t
+balancing t@(getPredicate double_right -> True) = rtt LR t
 
 subheight :: Segment Binary a -> Int
 subheight = foldr (\t _ -> height t) 0
