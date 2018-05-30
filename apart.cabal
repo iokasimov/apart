@@ -53,7 +53,8 @@ library
     TypeFamilies,
     TypeOperators,
     ViewPatterns,
-    PatternSynonyms
+    PatternSynonyms,
+    TupleSections
 
 executable example
   main-is: Example/Main.hs
@@ -77,7 +78,9 @@ executable example
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns
+    ViewPatterns,
+    PatternSynonyms,
+    TupleSections
 
 test-suite test
   type: exitcode-stdio-1.0
@@ -103,5 +106,7 @@ test-suite test
     TypeInType,
     TypeFamilies,
     TypeOperators,
-    ViewPatterns
+    ViewPatterns,
+    PatternSynonyms,
+    TupleSections
   ghc-options: -fno-warn-tabs
