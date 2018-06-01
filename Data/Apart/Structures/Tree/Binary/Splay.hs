@@ -1,6 +1,7 @@
-module Data.Apart.Structures.Tree.Binary.Splay (Splay) where
+module Data.Apart.Structures.Tree.Binary.Splay (Splay, search) where
 
 import Control.Comonad (Comonad (..))
+import Data.Foldable (find)
 import Data.Functor.Bind (Bind (..))
 import Data.Functor.Contravariant (Predicate (..))
 import Data.Function ((&))
@@ -10,6 +11,9 @@ import Data.Apart.Structures.Tree.Binary (Binary, ls, gt)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
 type Splay = Binary
+
+search :: Eq a => a -> Binary a -> Maybe (a, Segment Splay a)
+search x t = (,splay x t) <$> (find (== x) t)
 
 left_zig :: Eq a => Predicate (a, Binary a)
 left_zig = Predicate $ \ (x, t) -> gt t
@@ -29,11 +33,11 @@ right_zig_zig = Predicate $ \ (x, t) -> ls t >>- ls
 
 left_zig_zag :: Eq a => Predicate (a, Binary a)
 left_zig_zag = Predicate $ \ (x, t) -> gt t >>- ls
-	& foldr (\ll _ -> extract ll == x) False
+	& foldr (\gl _ -> extract gl == x) False
 
 right_zig_zag :: Eq a => Predicate (a, Binary a)
 right_zig_zag = Predicate $ \ (x, t) -> ls t >>- gt
-	& foldr (\ll _ -> extract ll == x) False
+	& foldr (\lg _ -> extract lg == x) False
 
 splay :: Eq a => a -> Binary a -> Segment Splay a
 splay x t@(getPredicate left_zig . (x,) -> True) = rtt L t
