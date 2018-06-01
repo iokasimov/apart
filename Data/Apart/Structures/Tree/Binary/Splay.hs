@@ -8,9 +8,13 @@ import Data.Function ((&))
 
 import Data.Apart.Apart (Segment (..))
 import Data.Apart.Structures.Tree.Binary (Binary, ls, gt)
+import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
 type Splay = Binary
+
+insert :: Ord a => a -> Binary a -> Segment Splay a
+insert x t = splay x $ Binary.insert t x
 
 search :: Eq a => a -> Binary a -> Maybe (a, Segment Splay a)
 search x t = (,splay x t) <$> (find (== x) t)
