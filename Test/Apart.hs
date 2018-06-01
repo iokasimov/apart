@@ -6,6 +6,7 @@ import Hedgehog (Group (..), checkParallel)
 import Test.Apart.Structures.Stack
 import Test.Apart.Structures.Tree.Binary
 import Test.Apart.Structures.Tree.Binary.AVL
+import Test.Apart.Structures.Tree.Binary.Splay
 
 main = do
 	hSetBuffering stdout LineBuffering
@@ -22,3 +23,7 @@ main = do
 	checkParallel $ Group "AVL tree structure" [
 		( "Balance factor is well"
 		, balance_factor_is_well )]
+
+	checkParallel $ Group "Splay tree structure" [
+		( "Found element should be lifted to root"
+		, found_element_should_be_lifted_to_root )]

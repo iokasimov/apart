@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary.Splay (Splay, search) where
+module Data.Apart.Structures.Tree.Binary.Splay (Splay, search, insert) where
 
 import Control.Comonad (Comonad (..))
 import Data.Foldable (find)
@@ -7,7 +7,7 @@ import Data.Functor.Contravariant (Predicate (..))
 import Data.Function ((&))
 
 import Data.Apart.Apart (Segment (..))
-import Data.Apart.Structures.Tree.Binary (Binary, ls, gt)
+import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), ls, gt)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
@@ -16,8 +16,9 @@ type Splay = Binary
 insert :: Ord a => a -> Binary a -> Segment Splay a
 insert x t = splay x $ Binary.insert t x
 
-search :: Eq a => a -> Binary a -> Maybe (a, Segment Splay a)
-search x t = (,splay x t) <$> (find (== x) t)
+-- | If needed element not in the root - it isn't found
+search :: Eq a => a -> Binary a -> Segment Splay a
+search x t = maybe End (const $ splay x t) $ find (== x) t
 
 left_zig :: Eq a => Predicate (a, Binary a)
 left_zig = Predicate $ \ (x, t) -> gt t
