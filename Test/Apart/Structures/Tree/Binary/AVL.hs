@@ -7,7 +7,7 @@ import Hedgehog.Range (linear)
 import Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), singleton, factor)
-import Data.Apart.Structures.Tree.Binary.AVL (AVL, insert)
+import Data.Apart.Structures.Tree.Binary.AVL (insert)
 
 balance_factor_is_well :: Property
 balance_factor_is_well = property $ do

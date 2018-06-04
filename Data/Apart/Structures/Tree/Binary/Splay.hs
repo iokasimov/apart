@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Tree.Binary.Splay (Splay, search, insert) where
+module Data.Apart.Structures.Tree.Binary.Splay (search, insert) where
 
 import Control.Comonad (Comonad (..))
 import Data.Foldable (find)
@@ -11,13 +11,11 @@ import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
-type Splay = Binary
-
-insert :: Ord a => a -> Binary a -> Segment Splay a
+insert :: Ord a => a -> Binary a -> Segment Binary a
 insert x t = splay x $ Binary.insert t x
 
 -- | If needed element not in the root - it isn't found
-search :: Eq a => a -> Binary a -> Segment Splay a
+search :: Eq a => a -> Binary a -> Segment Binary a
 search x t = maybe End (const $ splay x t) $ find (== x) t
 
 left_zig :: Eq a => Predicate (a, Binary a)
@@ -44,7 +42,7 @@ right_zig_zag :: Eq a => Predicate (a, Binary a)
 right_zig_zag = Predicate $ \ (x, t) -> ls t >>- gt
 	& foldr (\lg _ -> extract lg == x) False
 
-splay :: Eq a => a -> Binary a -> Segment Splay a
+splay :: Eq a => a -> Binary a -> Segment Binary a
 splay x t@(getPredicate left_zig . (x,) -> True) = rtt L t
 splay x t@(getPredicate right_zig . (x,) -> True) = rtt R t
 splay x t@(getPredicate left_zig_zig . (x,) -> True) = rtt LL t
