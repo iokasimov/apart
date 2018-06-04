@@ -1,15 +1,17 @@
 name:                apart
-version:             0.1
-description:         Get your structure and rip it apart
+version:             0.1.0
+synopsis:            Get all your structure and rip it apart.
 homepage:            https://github.com/iokasimov/tree
 license:             BSD3
 license-file:        LICENSE
 author:              Murat Kasimov
 maintainer:          Murat Kasimov <iokasimov.m@gmail.com>
 copyright:           Copyright (c) 2018 Murat Kasimov
-category:            Data
+category:            Data, Control
 build-type:          Simple
 cabal-version:       >= 1.10
+
+description:         The main idea: if you can describe your data structure via Cofree, with apart you can serialize, persistent or hash a segment of your structure!
 
 source-repository head
   type: git
