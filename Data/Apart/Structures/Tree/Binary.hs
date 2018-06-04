@@ -11,7 +11,12 @@ import Data.Apart.Apart (Segment (..))
 
 type Binary = Cofree Branches
 
-data Branches a = End | Less a | Greater a | Branches a a deriving Show
+data Branches a
+	= End -- ^ No children
+	| Less a -- ^ Left child
+	| Greater a -- ^ Right child
+	| Branches a a -- ^ Both
+	deriving Show
 
 instance Semigroup (Branches a) where
 	End <> x = x
@@ -69,11 +74,13 @@ instance Traversable Branches where
 	traverse f (Greater x) = Greater <$> f x
 	traverse f (Branches l g) = Branches <$> f l <*> f g
 
+-- | Get @x@ from @Branches x y@ or from @Less x@.
 ls :: Binary a -> Segment Binary a
 ls (_ :< Less x) = Less x
 ls (_ :< Branches x _) = Less x
 ls (_ :< _) = End
 
+-- | Get @y@ from @Branches x y@ or from @Greater y@.
 gt :: Binary a -> Segment Binary a
 gt (_ :< Greater x) = Greater x
 gt (_ :< Branches _ x) = Greater x
@@ -93,14 +100,14 @@ insert (y :< Branches lt gt) x@((>) y -> True) = y :< Branches (insert lt x) gt
 insert (y :< Branches lt gt) x@((<) y -> True) = y :< Branches lt (insert gt x)
 insert binary x = binary
 
--- the way to the most remote branch
+-- | The way to the most remote branch.
 height :: Binary a -> Int
 height (a :< End) = 1
 height (a :< Less l) = 1 + height l
 height (a :< Greater g) = 1 + height g
 height (a :< Branches l g) = 1 + max (height l) (height g)
 
--- balance factor for root node
+-- | Balance factor for root node.
 factor :: Binary a -> Int
 factor (a :< End) = 1
 factor (a :< Less l) = (1 + factor l) - 1

@@ -4,6 +4,7 @@ import Control.Comonad.Cofree (Cofree (..))
 
 import Data.Apart.Apart (Segment (..))
 
+-- | Or non-empty list.
 type Stack = Cofree Maybe
 
 insert :: a -> Stack a -> Stack a

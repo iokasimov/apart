@@ -5,7 +5,7 @@ import Data.Bifunctor (Bifunctor (..))
 import Data.Bitraversable (Bitraversable (..))
 import Data.Semigroup (Semigroup (..))
 
--- | Type that can tell you about aggregate state of your structure
+-- | Type that can tell you about aggregate state of your structure.
 data Shape t raw value
 	= Ready (t value) -- ^ Segment of values in memory
 	| Converted raw -- ^ Segment of values somewhere else

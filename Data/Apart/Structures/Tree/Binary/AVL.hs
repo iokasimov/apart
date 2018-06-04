@@ -10,6 +10,7 @@ import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
+-- | Trying rebalance tree after each insert.
 insert :: Ord a => a -> Binary a -> Segment Binary a
 insert x tree = balancing $ Binary.insert tree x
 

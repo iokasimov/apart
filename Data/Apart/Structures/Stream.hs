@@ -3,6 +3,7 @@ module Data.Apart.Structures.Stream (Stream, same) where
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Functor.Identity (Identity (..))
 
+-- | Infinite sequence.
 type Stream = Cofree Identity
 
 same :: a -> Stream a

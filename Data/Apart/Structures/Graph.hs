@@ -5,7 +5,7 @@ import Control.Comonad (Comonad (..))
 
 import Data.Apart.Apart (Segment (..))
 
--- directed acyclic graph
+-- | Directed acyclic graph.
 type Graph = Cofree Edge
 
 data Edge a = Empty | Single a | Connect a | Overlay a deriving Show
@@ -40,7 +40,7 @@ isolated = foldr (\el -> Overlay . (:<) el) Empty
 star :: Foldable t => a -> t a -> Graph a
 star x structure = x :< connect (isolated structure)
 
--- remove vertex and all of its edges
+-- | Remove vertex and all of its edges.
 remove :: Eq a => a -> Cofree Edge a -> Edge (Cofree Edge a)
 remove x graph@((==) x . extract -> True) = overlay $ unwrap graph
 remove x graph@(y :< segment) = ((:<) y . overlay . remove x) <$> segment

@@ -11,10 +11,11 @@ import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
+-- | Splay tree after each insert.
 insert :: Ord a => a -> Binary a -> Segment Binary a
 insert x t = splay x $ Binary.insert t x
 
--- | If needed element not in the root - it isn't found
+-- | If needed element not in the root - it isn't found.
 search :: Eq a => a -> Binary a -> Segment Binary a
 search x t = maybe End (const $ splay x t) $ find (== x) t
 

@@ -36,6 +36,7 @@ seek (s :< Just ss) prefix@((==) s . flip (^.) symbol -> True) =
 seek (s :< Nothing) prefix@((==) s . flip (^.) symbol -> True) = Just $ extract prefix
 seek (s :< _) prefix@((==) s . flip (^.) symbol -> False) = Nothing
 
+-- | You can insert value with @path + 1 symbol@ of existing @path@ in tree.
 insert :: (Foldable t, Alternative t, Eq s) => Stack s -> v -> Prefix s t v -> Prefix s t v
 insert (s :< _) x prefix@((==) s . flip (^.) symbol -> False) = prefix
 insert (s :< Nothing) x prefix@((==) s . flip (^.) symbol -> True) = x :< unwrap prefix
