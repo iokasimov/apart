@@ -7,7 +7,7 @@ import Hedgehog (Property (..), Gen (..), forAll, property, assert)
 import Hedgehog.Gen (enumBounded, list)
 import Hedgehog.Range (linear)
 
-import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..))
+import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))
 import Data.Apart.Structures.Tree.Binary.Splay (Splay, insert, search)
 
 found_element_should_be_lifted_to_root :: Property

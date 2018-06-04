@@ -6,7 +6,7 @@ import Hedgehog.Gen (enumBounded, list)
 import Hedgehog.Range (linear)
 import Data.Functor.Bind (Bind (..))
 
-import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), singleton, factor)
+import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), singleton, factor)
 import Data.Apart.Structures.Tree.Binary.AVL (AVL, insert)
 
 balance_factor_is_well :: Property

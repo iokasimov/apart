@@ -8,7 +8,7 @@ import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
 import Data.Apart.Apart (Segment (..))
-import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), ls, gt, height)
+import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 
 data Rotate = L | R | LL | RR | LR | RL
 

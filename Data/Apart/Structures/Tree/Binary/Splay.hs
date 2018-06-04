@@ -7,7 +7,7 @@ import Data.Functor.Contravariant (Predicate (..))
 import Data.Function ((&))
 
 import Data.Apart.Apart (Segment (..))
-import Data.Apart.Structures.Tree.Binary (Binary, Crotch (..), ls, gt)
+import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
