@@ -1,6 +1,7 @@
-module Data.Apart.Structures.Stack (Stack, insert, foldaway) where
+module Data.Apart.Structures.Stack (Stack, insert, foldaway, final) where
 
-import Control.Comonad.Cofree (Cofree (..))
+import Control.Comonad.Cofree (Cofree (..), unwrap)
+import Data.Functor.Contravariant (Predicate (..))
 
 import Data.Apart.Apart (Segment (..))
 
@@ -15,3 +16,6 @@ insert x = (:<) x . Just
 -- slightly as natural transformation
 foldaway :: Foldable t => t a -> Segment Stack a
 foldaway = foldr (\el -> Just . (:<) el) Nothing
+
+final :: Eq a => Predicate (Stack a)
+final = Predicate $ \s -> unwrap s == Nothing

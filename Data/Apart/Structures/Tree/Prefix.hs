@@ -5,8 +5,9 @@ import Control.Comonad (Comonad (..))
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Control.Lens (Lens', (^.), (%~))
 import Data.Maybe (isJust)
-import Data.Function ((&))
 import Data.Foldable (find)
+import Data.Function ((&))
+import Data.Functor.Contravariant (Predicate (..))
 import Data.Monoid (Monoid (..), (<>))
 
 import Data.Apart.Structures.Stack (Stack)
@@ -30,17 +31,28 @@ instance Foldable t => Foldable (Labeled s t) where
 instance Traversable t => Traversable (Labeled s t) where
 	traverse f (Hop s as) = Hop s <$> traverse f as
 
-seek :: (Functor t, Foldable t, Eq s) => Stack s -> Prefix s t v -> Maybe v
+-- | Prefix tree haven't nodes
+deadend :: Foldable t => Predicate (Prefix s t a)
+deadend = Predicate $ \(_ :< Hop _ ns) -> length ns == 0
+
+-- | Key and current key of root are matched
+progress :: (Eq s, Foldable t) => Predicate (s, Prefix s t a)
+progress = Predicate $ \(s, _ :< Hop s' ns) -> s == s'
+
+seek :: (Functor t, Foldable t, Eq s)
+	=> Stack s -> Prefix s t v -> Maybe v
 seek (s :< Just ss) prefix@((==) s . flip (^.) symbol -> True) =
 	(<$>) extract $ find (isJust . seek ss) $ unwrap prefix
 seek (s :< Nothing) prefix@((==) s . flip (^.) symbol -> True) = Just $ extract prefix
 seek (s :< _) prefix@((==) s . flip (^.) symbol -> False) = Nothing
 
 -- | You can insert value with @path + 1 symbol@ of existing @path@ in tree.
-insert :: (Foldable t, Alternative t, Eq s) => Stack s -> v -> Prefix s t v -> Prefix s t v
-insert (s :< _) x prefix@((==) s . flip (^.) symbol -> False) = prefix
-insert (s :< Nothing) x prefix@((==) s . flip (^.) symbol -> True) = x :< unwrap prefix
-insert (s :< Just ss@(s' :< Just _)) x prefix@((==) s . flip (^.) symbol -> True) =
+insert :: (Foldable t, Alternative t, Eq s)
+	=> Stack s -> v -> Prefix s t v -> Prefix s t v
+insert (s :< _) x prefix@(getPredicate progress . (s,) -> False) = prefix
+insert (s :< Nothing) x prefix@(getPredicate progress . (s,) -> True) = x :< unwrap prefix
+insert (s :< Just ss@(s' :< Just _)) x prefix@(getPredicate progress . (s,) -> True) =
 	prefix & nodes %~ (<$>) (insert ss x)
-insert (s :< Just ss@(s' :< Nothing)) x prefix@((==) s . flip (^.) symbol -> True) =
+insert (s :< Just ss@(s' :< Nothing)) x prefix@(getPredicate progress . (s,) -> True) =
 	prefix & nodes %~ (<|>) (pure $ x :< Hop s' empty)
+insert _ _ prefix = prefix
