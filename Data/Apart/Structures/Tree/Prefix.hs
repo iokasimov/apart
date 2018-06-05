@@ -1,6 +1,8 @@
-module Data.Apart.Structures.Tree.Prefix (Prefix, Labeled (..), seek, insert) where
+module Data.Apart.Structures.Tree.Prefix
+	(Prefix, Labeled (..), seek, insert, crumbs) where
 
 import Control.Applicative (Alternative (..))
+import Control.Arrow ((&&&))
 import Control.Comonad (Comonad (..))
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Control.Lens (Lens', (^.), (%~))
@@ -8,6 +10,7 @@ import Data.Maybe (isJust)
 import Data.Foldable (find)
 import Data.Function ((&))
 import Data.Functor.Contravariant (Predicate (..))
+import Data.Functor.Contravariant.Divisible (Divisible (..))
 import Data.Monoid (Monoid (..), (<>))
 
 import Data.Apart.Structures.Stack (Stack)
@@ -15,9 +18,6 @@ import Data.Apart.Structures.Stack (Stack)
 type Prefix s t = Cofree (Labeled s t)
 
 data Labeled s t a = Hop s (t a) deriving Show
-
-symbol :: Lens' (Prefix s t a) s
-symbol f (x :< Hop s ns) = (\new -> x :< Hop new ns) <$> f s
 
 nodes :: Lens' (Prefix s t a) (t (Prefix s t a))
 nodes f (x :< Hop s ns) = (\new -> x :< Hop s new) <$> f ns
@@ -35,24 +35,41 @@ instance Traversable t => Traversable (Labeled s t) where
 deadend :: Foldable t => Predicate (Prefix s t a)
 deadend = Predicate $ \(_ :< Hop _ ns) -> length ns == 0
 
--- | Key and current key of root are matched
+-- | Key and current key of root matched
 progress :: (Eq s, Foldable t) => Predicate (s, Prefix s t a)
 progress = Predicate $ \(s, _ :< Hop s' ns) -> s == s'
 
+-- | Keys matched and this is the end
+exactly :: (Eq s, Foldable t) => Predicate (s, Prefix s t a)
+exactly = divide (snd &&& id) deadend progress
+
 seek :: (Functor t, Foldable t, Eq s)
 	=> Stack s -> Prefix s t v -> Maybe v
-seek (s :< Just ss) prefix@((==) s . flip (^.) symbol -> True) =
+seek (s :< Just ss) prefix@(getPredicate progress . (s,) -> True) =
 	(<$>) extract $ find (isJust . seek ss) $ unwrap prefix
-seek (s :< Nothing) prefix@((==) s . flip (^.) symbol -> True) = Just $ extract prefix
-seek (s :< _) prefix@((==) s . flip (^.) symbol -> False) = Nothing
+seek (s :< Nothing) prefix@(getPredicate progress . (s,) -> True) = Just $ extract prefix
+seek (s :< _) prefix@(getPredicate progress . (s,) -> False) = Nothing
 
 -- | You can insert value with @path + 1 symbol@ of existing @path@ in tree.
 insert :: (Foldable t, Alternative t, Eq s)
 	=> Stack s -> v -> Prefix s t v -> Prefix s t v
 insert (s :< _) x prefix@(getPredicate progress . (s,) -> False) = prefix
 insert (s :< Nothing) x prefix@(getPredicate progress . (s,) -> True) = x :< unwrap prefix
-insert (s :< Just ss@(s' :< Just _)) x prefix@(getPredicate progress . (s,) -> True) =
+insert (s :< Just ss@(s' :< Just _)) x prefix@(getPredicate progress . (,) s -> True) =
 	prefix & nodes %~ (<$>) (insert ss x)
-insert (s :< Just ss@(s' :< Nothing)) x prefix@(getPredicate progress . (s,) -> True) =
+insert (s :< Just ss@(s' :< Nothing)) x prefix@(getPredicate progress . (,) s -> True) =
 	prefix & nodes %~ (<|>) (pure $ x :< Hop s' empty)
 insert _ _ prefix = prefix
+
+-- | Unlike @insert@, you can specify longest path, but a gap will be filled Monoid's empty values
+crumbs :: (Foldable t, Alternative t, Eq s, Monoid v)
+	=> Stack s -> v -> Prefix s t v -> Prefix s t v
+crumbs (s :< _) x prefix@(getPredicate progress . (s,) -> False) = prefix
+crumbs (s :< Just ss) x prefix@(getPredicate exactly . (,) s -> True) =
+	(extract prefix) :< Hop s (pure $ crumbs ss x $ mempty :< Hop (extract ss) empty)
+crumbs (s :< Nothing) x prefix@(getPredicate exactly . (,) s -> True) = x :< Hop s empty
+crumbs (s :< Just ss@(s' :< Just _)) x prefix@(getPredicate progress . (,) s -> True) =
+	prefix & nodes %~ (<$>) (crumbs ss x)
+crumbs (s :< Just (s' :< Nothing)) x prefix@(getPredicate progress . (,) s -> True) =
+	prefix & nodes %~ (<|>) (pure $ x :< Hop s' empty)
+crumbs _ _ prefix = prefix
