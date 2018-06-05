@@ -1,5 +1,5 @@
 module Data.Apart.Structures.Tree.Prefix
-	(Prefix, Labeled (..), seek, insert, crumbs) where
+	(Prefix, Labeled (..), singleton, seek, insert, crumbs) where
 
 import Control.Applicative (Alternative (..))
 import Control.Arrow ((&&&))
@@ -30,6 +30,9 @@ instance Foldable t => Foldable (Labeled s t) where
 
 instance Traversable t => Traversable (Labeled s t) where
 	traverse f (Hop s as) = Hop s <$> traverse f as
+
+singleton :: Alternative t => s -> a -> Prefix s t a
+singleton s v = v :< Hop s empty
 
 -- | Prefix tree haven't nodes
 deadend :: Foldable t => Predicate (Prefix s t a)
