@@ -7,6 +7,7 @@ import Test.Apart.Structures.Stack
 import Test.Apart.Structures.Tree.Binary
 import Test.Apart.Structures.Tree.Binary.AVL
 import Test.Apart.Structures.Tree.Binary.Splay
+import Test.Apart.Structures.Tree.Prefix
 
 main = do
 	hSetBuffering stdout LineBuffering
@@ -27,3 +28,7 @@ main = do
 	checkParallel $ Group "Splay tree structure" [
 		( "Found element should be lifted to root"
 		, found_element_should_be_lifted_to_root )]
+
+	checkParallel $ Group "Prefix tree structure" [
+		( "After successful insert length should be incremented"
+		, after_successful_insert_length_should_be_incremented )]
