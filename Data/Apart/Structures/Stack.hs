@@ -1,4 +1,5 @@
-module Data.Apart.Structures.Stack (Stack, insert, foldaway, final) where
+module Data.Apart.Structures.Stack
+	(Stack, insert, singleton, foldaway, final) where
 
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Data.Functor.Contravariant (Predicate (..))
@@ -7,6 +8,9 @@ import Data.Apart.Apart (Segment (..))
 
 -- | Or non-empty list.
 type Stack = Cofree Maybe
+
+singleton :: a -> Stack a
+singleton x = x :< Nothing
 
 insert :: a -> Stack a -> Stack a
 insert x = (:<) x . Just
