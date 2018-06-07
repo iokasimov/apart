@@ -1,7 +1,7 @@
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Foldable (toList)
 
-import Data.Apart (Apart (..), Shape (..), Scattered (..), Segment (..), limit, fluent, recover)
+import Data.Apart (Apart (..), Shape (..), Scattered (..), Segment (..), limit, throughout, recover)
 import Data.Apart.Structures.Stack (Stack)
 
 -- part of data structure in some file
@@ -24,4 +24,4 @@ main = do
 	print "Recovering data structure, the rest of structure should be in file"
 	recover read_from_file scattered >>= print . toList
 	print "Traverse over structure with action, recover segments on the way"
-	fluent print read_from_file scattered
+	throughout print read_from_file scattered

@@ -1,4 +1,4 @@
-module Data.Apart.Combinators (Restorer, Materializer, recover, limit, fluent) where
+module Data.Apart.Combinators (Restorer, Materializer, recover, limit, throughout) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Monad (join)
@@ -29,9 +29,7 @@ limit n convert (x :< rest) = (<$>) (Apart . (:<) x . Ready) $
 	((<$>) . (<$>)) part $ traverse (limit (n - 1) convert) rest
 
 -- | Traverse over scattered structure, including with all restored segments.
-fluent :: (Traversable t, Monad g) => (value -> g res) -> Restorer g t raw value
-	-> (Scattered (Cofree t) value raw) -> g (Cofree t res)
-fluent for_value for_raw (Apart (x :< Ready values)) = (:<) <$> for_value x
-	<*> (traverse (fluent for_value for_raw . Apart) values)
-fluent for_value for_raw (Apart (x :< Converted raw)) = join $
-	traverse for_value <$> ((:<) x <$> for_raw raw)
+throughout :: (Traversable t, Monad g) => (value -> g result) -> Restorer g t raw value
+	-> (Scattered (Cofree t) value raw) -> g (Cofree t result)
+throughout f g (Apart (x :< Ready vs)) = (:<) <$> f x <*> (traverse (throughout f g . Apart) vs)
+throughout f g (Apart (x :< Converted r)) = join $ traverse f <$> ((:<) x <$> g r)
