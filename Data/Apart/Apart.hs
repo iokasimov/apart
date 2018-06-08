@@ -4,6 +4,7 @@ import Control.Comonad.Cofree (Cofree (..))
 import Data.Bifoldable (Bifoldable (..))
 import Data.Bifunctor (Bifunctor (..))
 import Data.Bitraversable (Bitraversable (..))
+import Data.Functor.Apply (Apply (..))
 import Data.Kind (Type)
 
 import Data.Apart.Shape (Shape (..))
@@ -14,6 +15,9 @@ data Apart t raw value = Apart
 
 instance Functor t => Functor (Apart t raw) where
 	fmap f (Apart structure) = Apart $ f <$> structure
+
+instance Apply t => Apply (Apart t raw) where
+	Apart fs <.> Apart structure = Apart $ fs <.> structure
 
 instance Functor t => Bifunctor (Apart t) where
 	bimap g f (Apart (x :< Ready values)) = Apart $

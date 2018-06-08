@@ -3,6 +3,8 @@ module Data.Apart.Shape (Shape (..)) where
 import Data.Bifoldable (Bifoldable (..))
 import Data.Bifunctor (Bifunctor (..))
 import Data.Bitraversable (Bitraversable (..))
+import Data.Functor.Apply (Apply (..))
+import Data.Functor.Alt (Alt (..))
 import Data.Semigroup (Semigroup (..))
 
 -- | Type that can tell you about aggregate state of your structure.
@@ -17,6 +19,15 @@ instance (Show (t value), Show value, Show raw) => Show (Shape t raw value) wher
 instance Functor t => Functor (Shape t raw) where
 	fmap f (Ready values)  = Ready $ f <$> values
 	fmap f (Converted raw) = Converted raw
+
+instance Apply t => Apply (Shape t raw) where
+	Ready fs <.> Ready xs = Ready $ fs <.> xs
+	Ready fs <.> Converted raw = Converted raw
+	Converted raw <.> _ = Converted raw
+
+instance Alt t => Alt (Shape t raw) where
+	Converted raw <!> x = x
+	Ready xs <!> _ = Ready xs
 
 instance Foldable t => Foldable (Shape t raw) where
 	foldr f acc (Ready values)  = foldr f acc values
