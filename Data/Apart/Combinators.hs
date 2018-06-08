@@ -1,5 +1,6 @@
-module Data.Apart.Combinators (Restorer, Materializer, recover, limit, throughout) where
+module Data.Apart.Combinators (Restorer, Materializer, recover, limit, throughout, inmemory) where
 
+import Control.Applicative (Alternative (..))
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Monad (join)
 
@@ -33,3 +34,7 @@ throughout :: (Traversable t, Monad g) => (value -> g result) -> Restorer g t ra
 	-> (Scattered (Cofree t) value raw) -> g (Cofree t result)
 throughout f g (Apart (x :< Ready vs)) = (:<) <$> f x <*> (traverse (throughout f g . Apart) vs)
 throughout f g (Apart (x :< Converted r)) = join $ traverse f <$> ((:<) x <$> g r)
+
+inmemory :: (Functor t, Alternative t) => Apart t raw value -> Cofree t value
+inmemory (Apart (x :< Ready xs)) = (:<) x $ inmemory . Apart <$> xs
+inmemory (Apart (x :< Converted _)) = x :< empty
