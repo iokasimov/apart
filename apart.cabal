@@ -31,6 +31,7 @@ library
     Data.Apart.Structures.Tree.Binary.Rotation,
     Data.Apart.Structures.Tree.Binary.AVL,
     Data.Apart.Structures.Tree.Binary.Splay,
+    Data.Apart.Structures.Tree.Binary.Redblack,
     Data.Apart.Machinery.Moore,
     Data.Apart.Usage.Blockchain,
     Data.Apart.Usage.LRU
