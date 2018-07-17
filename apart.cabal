@@ -20,6 +20,10 @@ source-repository head
 library
   exposed-modules:
     Data.Apart,
+    Data.Apart.Abilities.Embedded,
+    Data.Apart.Abilities.Injected,
+    Data.Apart.Abilities.Scattered,
+    Data.Apart.Abilities.Segmented,
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,

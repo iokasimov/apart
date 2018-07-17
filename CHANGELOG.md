@@ -6,4 +6,4 @@
 * Add @Redblack tree definition and functions
 * Get rid Stack in favor new Nix-style Cabal
 * Add @degree in @Graph strucutre
-* Add @Injected type family
+* Add @Injected and @Embedded type families
