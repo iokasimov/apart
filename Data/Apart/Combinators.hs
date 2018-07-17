@@ -5,8 +5,7 @@ import Control.Comonad.Cofree (Cofree (..))
 import Control.Monad (join)
 
 import Data.Apart.Apart (Apart (..), Shape (..))
-import Data.Apart.Abilities.Segmented (Segmented (..))
-import Data.Apart.Abilities.Scattered (Scattered (..))
+import Data.Apart.Abilities (Segmented (..), Scattered (..))
 
 -- | Pull back segment of values to memory.
 type Restorer g t raw value = (Traversable t, Applicative g) =>

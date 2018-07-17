@@ -6,7 +6,7 @@ import Data.Functor.Bind (Bind (..))
 import Data.Functor.Contravariant (Predicate (..))
 import Data.Function ((&))
 
-import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)

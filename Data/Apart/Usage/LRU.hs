@@ -4,7 +4,7 @@ import Control.Comonad.Cofree (Cofree (..))
 import Data.Functor.Alt (Alt (..))
 import Data.Functor.Bind (Bind (..))
 
-import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))
 import Data.Apart.Structures.Tree.Binary.Splay (insert)
 

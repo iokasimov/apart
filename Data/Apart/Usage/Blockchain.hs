@@ -6,7 +6,7 @@ import Data.Bitraversable (Bitraversable (..))
 import Data.Functor.Compose (Compose (..))
 
 import Data.Apart (Apart (..), Shape (..))
-import Data.Apart.Abilities.Scattered (Scattered (..))
+import Data.Apart.Abilities (Scattered (..))
 import Data.Apart.Structures.Stack (Stack)
 
 type Account = Int

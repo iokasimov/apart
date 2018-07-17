@@ -4,7 +4,7 @@ module Data.Apart.Structures.Stack
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Data.Functor.Contravariant (Predicate (..))
 
-import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities (Segmented (..))
 
 -- | Or non-empty list.
 type Stack = Cofree Maybe

@@ -2,8 +2,7 @@ import Control.Comonad.Cofree (Cofree (..))
 import Data.Foldable (toList)
 
 import Data.Apart (Apart (..), Shape (..), limit, throughout, recover)
-import Data.Apart.Abilities.Segmented (Segmented (..))
-import Data.Apart.Abilities.Scattered (Scattered (..))
+import Data.Apart.Abilities (Segmented (..), Scattered (..))
 import Data.Apart.Structures.Stack (Stack)
 
 -- part of data structure in some file

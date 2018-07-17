@@ -7,7 +7,7 @@ import Control.Lens ((<&>))
 import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
-import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 
 data Rotate

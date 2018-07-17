@@ -3,7 +3,7 @@ module Data.Apart.Structures.Graph (Graph, Edges (..), isolated, star, remove) w
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Control.Comonad (Comonad (..))
 
-import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities (Segmented (..))
 
 -- | Directed acyclic graph.
 type Graph = Cofree Edges
