@@ -3,5 +3,7 @@
 * Rename `fluent` to `throughout`
 
 # 0.1.2
-* Add Red-black tree definition and functions
+* Add @Redblack tree definition and functions
 * Get rid Stack in favor new Nix-style Cabal
+* Add @degree in @Graph strucutre
+* Add @Injected type family
