@@ -7,7 +7,7 @@ import Control.Lens ((<&>))
 import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
-import Data.Apart.Apart (Segment (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 
 data Rotate
@@ -18,7 +18,7 @@ data Rotate
 	| LL -- ^ Left zig-zig (Splay)
 	| RR -- ^ Right zig-zig (Splay)
 
-rtt :: Rotate -> Binary a -> Segment Binary a
+rtt :: Rotate -> Binary a -> Segmented Binary a
 rtt L t = (<&>) (extract <$> ls t) $ flip (:<) $ (gt t >>- gt)
 	<> (Less $ (extract t) :< (ls t <> (gt t >>- ls)))
 rtt R t = (<&>) (extract <$> gt t) $ flip (:<) $ (ls t >>- ls)

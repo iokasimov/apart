@@ -1,12 +1,10 @@
-module Data.Apart.Apart (Apart (..), Shape (..), Segment (..), Scattered (..)) where
+module Data.Apart.Apart (Apart (..), Shape (..)) where
 
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Bifoldable (Bifoldable (..))
 import Data.Bifunctor (Bifunctor (..))
 import Data.Bitraversable (Bitraversable (..))
 import Data.Functor.Apply (Apply (..))
-import Data.Functor.Compose (Compose)
-import Data.Kind (Type)
 
 import Data.Apart.Shape (Shape (..))
 
@@ -36,14 +34,3 @@ instance Traversable t => Bitraversable (Apart t) where
 		(Ready <$> traverse ((<$>) part . bitraverse g f . Apart) values)
 	bitraverse g f (Apart (x :< Converted raw)) = (<$>) Apart $
 		(:<) <$> f x <*> (Converted <$> g raw)
-
-type family Segment (structure :: Type -> Type) (value :: Type) :: Type where
-	Segment (Cofree t) value = t (Cofree t value)
-
-type (:.:) = Compose
-
-type family Injected (structure :: Type -> Type) (extension :: Type -> Type) (value :: Type) :: Type where
-	Injected (Cofree t) extension value = Cofree (t :.: extension) value
-
-type family Scattered (structure :: Type -> Type) (value :: Type) (raw :: Type) :: Type where
-	Scattered (Cofree t) value raw = Apart t raw value

@@ -4,7 +4,7 @@ import Control.Comonad.Cofree (Cofree (..))
 import Data.Functor.Alt (Alt (..))
 import Data.Functor.Bind (Bind (..))
 
-import Data.Apart (Segment (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))
 import Data.Apart.Structures.Tree.Binary.Splay (insert)
 
@@ -14,7 +14,7 @@ import Data.Apart.Structures.Tree.Binary.Splay (insert)
 	so we need to add priority for the most recently used elements.
 	Very resembles behavoir of Splay trees, actually.
 -}
-type LRU a = Segment Binary a
+type LRU a = Segmented Binary a
 
 -- | Insert sortable value to cache, aftear that, value moved to root
 cache :: Ord a => a -> LRU a -> LRU a

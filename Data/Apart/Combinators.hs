@@ -4,15 +4,17 @@ import Control.Applicative (Alternative (..))
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Monad (join)
 
-import Data.Apart.Apart (Apart (..), Shape (..), Scattered (..), Segment (..))
+import Data.Apart.Apart (Apart (..), Shape (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
+import Data.Apart.Abilities.Scattered (Scattered (..))
 
 -- | Pull back segment of values to memory.
 type Restorer g t raw value = (Traversable t, Applicative g) =>
-	raw -> g (Segment (Cofree t) value)
+	raw -> g (Segmented (Cofree t) value)
 
 -- | Put in-memory values to somewhere else.
 type Materializer g t raw value = (Traversable t, Applicative g) =>
-	Segment (Cofree t) value -> g raw
+	Segmented (Cofree t) value -> g raw
 
 -- | Do nothing with in-memory part, pull back all values of structure to memory.
 recover :: (Traversable t, Applicative g) => Restorer g t raw value

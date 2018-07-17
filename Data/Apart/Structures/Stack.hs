@@ -4,7 +4,7 @@ module Data.Apart.Structures.Stack
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Data.Functor.Contravariant (Predicate (..))
 
-import Data.Apart.Apart (Segment (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
 
 -- | Or non-empty list.
 type Stack = Cofree Maybe
@@ -18,7 +18,7 @@ insert x = (:<) x . Just
 -- when I understand how to use partially applied
 -- type families correctly, it can be rewritten
 -- slightly as natural transformation
-foldaway :: Foldable t => t a -> Segment Stack a
+foldaway :: Foldable t => t a -> Segmented Stack a
 foldaway = foldr (\el -> Just . (:<) el) Nothing
 
 final :: Eq a => Predicate (Stack a)

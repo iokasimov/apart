@@ -5,22 +5,23 @@ import Data.Functor.Contravariant (Predicate (..))
 import Data.Functor.Contravariant.Divisible (Divisible (..))
 import Data.Functor.Bind (Bind (..))
 
-import Data.Apart.Apart (Segment (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
+
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)
 import Data.Apart.Structures.Tree.Binary.Rotation (Rotate (..), rtt)
 
 -- | Trying rebalance tree after each insert.
-insert :: Ord a => a -> Binary a -> Segment Binary a
+insert :: Ord a => a -> Binary a -> Segmented Binary a
 insert x tree = balancing $ Binary.insert tree x
 
-balancing :: Binary a -> Segment Binary a
+balancing :: Binary a -> Segmented Binary a
 balancing t@(getPredicate simple_left -> True) = rtt L t
 balancing t@(getPredicate simple_right -> True) = rtt R t
 balancing t@(getPredicate double_left -> True) = rtt RL t
 balancing t@(getPredicate double_right -> True) = rtt LR t
 
-subheight :: Segment Binary a -> Int
+subheight :: Segmented Binary a -> Int
 subheight = foldr (\t _ -> height t) 0
 
 simple_left :: Predicate (Binary a)

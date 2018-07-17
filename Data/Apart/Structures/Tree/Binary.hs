@@ -7,7 +7,7 @@ import Data.Functor.Alt (Alt (..))
 import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
-import Data.Apart.Apart (Segment (..))
+import Data.Apart.Abilities.Segmented (Segmented (..))
 
 type Binary = Cofree Branches
 
@@ -75,13 +75,13 @@ instance Traversable Branches where
 	traverse f (Branches l g) = Branches <$> f l <*> f g
 
 -- | Get @x@ from @Branches x y@ or from @Less x@.
-ls :: Binary a -> Segment Binary a
+ls :: Binary a -> Segmented Binary a
 ls (_ :< Less x) = Less x
 ls (_ :< Branches x _) = Less x
 ls (_ :< _) = End
 
 -- | Get @y@ from @Branches x y@ or from @Greater y@.
-gt :: Binary a -> Segment Binary a
+gt :: Binary a -> Segmented Binary a
 gt (_ :< Greater x) = Greater x
 gt (_ :< Branches _ x) = Greater x
 gt (_ :< _) = End
