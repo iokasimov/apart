@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Graph (Graph, Edge (..), isolated, star, remove) where
+module Data.Apart.Structures.Graph (Graph, Edges (..), isolated, star, remove) where
 
 import Control.Comonad.Cofree (Cofree (..), unwrap)
 import Control.Comonad (Comonad (..))
@@ -6,21 +6,21 @@ import Control.Comonad (Comonad (..))
 import Data.Apart.Apart (Segment (..))
 
 -- | Directed acyclic graph.
-type Graph = Cofree Edge
+type Graph = Cofree Edges
 
-data Edge a = Empty | Connect a | Overlay a deriving Show
+data Edges a = Empty | Connect a | Overlay a deriving Show
 
-instance Functor Edge where
+instance Functor Edges where
 	fmap f Empty = Empty
 	fmap f (Connect x) = Connect $ f x
 	fmap f (Overlay x) = Overlay $ f x
 
-instance Foldable Edge where
+instance Foldable Edges where
 	foldr f acc Empty = acc
 	foldr f acc (Connect x) = f x acc
 	foldr f acc (Overlay x) = f x acc
 
-instance Traversable Edge where
+instance Traversable Edges where
 	traverse f Empty = pure Empty
 	traverse f (Connect x) = Connect <$> f x
 	traverse f (Overlay x) = Overlay <$> f x
@@ -37,6 +37,12 @@ star :: Foldable t => a -> t a -> Graph a
 star x structure = x :< connect (isolated structure)
 
 -- | Remove vertex and all of its edges.
-remove :: Eq a => a -> Cofree Edge a -> Edge (Cofree Edge a)
+remove :: Eq a => a -> Graph a -> Segment Graph a
 remove x graph@((==) x . extract -> True) = overlay $ unwrap graph
 remove x graph@(y :< segment) = ((:<) y . overlay . remove x) <$> segment
+
+-- Take a degree of focused value
+degree :: Graph a -> Int
+degree (x :< Empty) = 0
+degree (x :< Overlay xs) = 0
+degree (x :< Connect xs) = length xs
