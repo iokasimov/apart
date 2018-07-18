@@ -1,4 +1,4 @@
-module Data.Apart.Abilities (Embedded (..), Injected (..), Segmented (..), Scattered (..)) where
+module Data.Apart.Abilities (Attached (..), Embedded (..), Injected (..), Segmented (..), Scattered (..)) where
 
 import Control.Comonad.Cofree (Cofree)
 import Data.Functor.Compose (Compose)
@@ -7,6 +7,9 @@ import Data.Kind (Type)
 import Data.Apart.Apart (Apart)
 
 type (:.:) = Compose
+
+type family Attached (structure :: Type -> Type) (extension :: Type -> Type) (value :: Type) :: Type where
+    Attached (Cofree t) extension value = Cofree t (extension value)
 
 type family Embedded (structure :: Type -> Type) (extension :: Type -> Type) (value :: Type) :: Type where
 	Embedded (Cofree t) extension value = Cofree (extension :.: t) value
