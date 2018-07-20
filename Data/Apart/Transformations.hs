@@ -1,4 +1,4 @@
-module Data.Apart.Abilities (Attached (..), Embedded (..), Injected (..), Segmented (..), Scattered (..)) where
+module Data.Apart.Transformations (Attached (..), Embedded (..), Injected (..), Segmented (..), Scattered (..)) where
 
 import Control.Comonad.Cofree (Cofree)
 import Data.Functor.Compose (Compose)

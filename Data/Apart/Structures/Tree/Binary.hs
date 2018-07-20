@@ -7,7 +7,7 @@ import Data.Functor.Alt (Alt (..))
 import Data.Functor.Bind (Bind (..))
 import Data.Semigroup (Semigroup (..))
 
-import Data.Apart.Abilities (Segmented (..))
+import Data.Apart.Transformations (Segmented (..))
 
 type Binary = Cofree Branches
 

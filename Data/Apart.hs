@@ -16,10 +16,10 @@
 
 module Data.Apart
 	( module Data.Apart.Apart
-	, module Data.Apart.Abilities
+	, module Data.Apart.Transformations
 	, module Data.Apart.Combinators
 	) where
 
 import Data.Apart.Apart
-import Data.Apart.Abilities
+import Data.Apart.Transformations
 import Data.Apart.Combinators

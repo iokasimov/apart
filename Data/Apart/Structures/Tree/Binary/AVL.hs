@@ -5,7 +5,7 @@ import Data.Functor.Contravariant (Predicate (..))
 import Data.Functor.Contravariant.Divisible (Divisible (..))
 import Data.Functor.Bind (Bind (..))
 
-import Data.Apart.Abilities (Segmented (..))
+import Data.Apart.Transformations (Segmented (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)
 import qualified Data.Apart.Structures.Tree.Binary as Binary (insert)

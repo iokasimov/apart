@@ -37,7 +37,7 @@ library
     Data.Apart.Usage.LRU
   other-modules:
     Data.Apart.Apart,
-    Data.Apart.Abilities,
+    Data.Apart.Transformations,
     Data.Apart.Shape,
     Data.Apart.Combinators
   build-depends:
