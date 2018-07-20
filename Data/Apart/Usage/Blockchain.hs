@@ -5,7 +5,8 @@ import Control.Comonad.Cofree (Cofree (..))
 import Data.Bitraversable (Bitraversable (..))
 import Data.Functor.Compose (Compose (..))
 
-import Data.Apart (Apart (..), Shape (..))
+import Data.Apart (Apart (..))
+import Data.Apart.Shape (Shape (..))
 import Data.Apart.Transformations (Scattered (..))
 import Data.Apart.Structures.Stack (Stack)
 

@@ -4,7 +4,7 @@ import Control.Comonad.Cofree (Cofree)
 import Data.Functor.Compose (Compose)
 import Data.Kind (Type)
 
-import Data.Apart.Apart (Apart)
+import Data.Apart (Apart)
 
 type (:.:) = Compose
 

@@ -4,7 +4,8 @@ import Control.Applicative (Alternative (..))
 import Control.Comonad.Cofree (Cofree (..))
 import Control.Monad (join)
 
-import Data.Apart.Apart (Apart (..), Shape (..))
+import Data.Apart (Apart (..))
+import Data.Apart.Shape (Shape (..))
 import Data.Apart.Transformations (Segmented (..), Scattered (..))
 
 -- | Pull back segment of values to memory.

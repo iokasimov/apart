@@ -36,7 +36,7 @@ library
     Data.Apart.Usage.Blockchain,
     Data.Apart.Usage.LRU
   other-modules:
-    Data.Apart.Apart,
+    -- Data.Apart.Apart,
     Data.Apart.Transformations,
     Data.Apart.Shape,
     Data.Apart.Combinators

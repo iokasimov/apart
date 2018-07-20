@@ -7,3 +7,7 @@
 * Get rid Stack in favor new Nix-style Cabal
 * Add @degree in @Graph strucutre
 * Add @Injected, @Embedded and @Attached type families
+
+# 0.1.3
+* Rename @Abilities to @Transformations
+* Move Data.Apart.Apart module to Data.Apart

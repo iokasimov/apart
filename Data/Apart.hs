@@ -14,12 +14,39 @@
 -- A simple introduction to this library can be found here: https://iokasimov.github.io/posts/2018/05/cofree-will-tear-us-apart
 ----------------------------------------------------------------------------
 
-module Data.Apart
-	( module Data.Apart.Apart
-	, module Data.Apart.Transformations
-	, module Data.Apart.Combinators
-	) where
+module Data.Apart (Apart (..)) where
 
-import Data.Apart.Apart
-import Data.Apart.Transformations
-import Data.Apart.Combinators
+import Control.Comonad.Cofree (Cofree (..))
+import Data.Bifoldable (Bifoldable (..))
+import Data.Bifunctor (Bifunctor (..))
+import Data.Bitraversable (Bitraversable (..))
+import Data.Functor.Apply (Apply (..))
+
+import Data.Apart.Shape (Shape (..))
+
+-- | Structure with scattered segments.
+newtype Apart t raw value = Apart
+	{ part :: (Cofree (Shape t raw) value) }
+
+instance Functor t => Functor (Apart t raw) where
+	fmap f (Apart structure) = Apart $ f <$> structure
+
+instance Apply t => Apply (Apart t raw) where
+	Apart fs <.> Apart structure = Apart $ fs <.> structure
+
+instance Functor t => Bifunctor (Apart t) where
+	bimap g f (Apart (x :< Ready values)) = Apart $
+		f x :< Ready (part . bimap g f . Apart <$> values)
+	bimap g f (Apart (x :< Converted raw)) = Apart $
+		f x :< (Converted $ g raw)
+
+instance Foldable t => Bifoldable (Apart t) where
+	bifoldr g f acc (Apart (x :< Ready values)) = f x $
+		foldr (\st a -> bifoldr g f a $ Apart st) acc values
+	bifoldr g f acc (Apart (x :< Converted raw)) = f x $ g raw acc
+
+instance Traversable t => Bitraversable (Apart t) where
+	bitraverse g f (Apart (x :< Ready values)) = (<$>) Apart $ (:<) <$> f x <*>
+		(Ready <$> traverse ((<$>) part . bitraverse g f . Apart) values)
+	bitraverse g f (Apart (x :< Converted raw)) = (<$>) Apart $
+		(:<) <$> f x <*> (Converted <$> g raw)

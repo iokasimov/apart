@@ -1,7 +1,9 @@
 import Control.Comonad.Cofree (Cofree (..))
 import Data.Foldable (toList)
 
-import Data.Apart (Apart (..), Shape (..), limit, throughout, recover)
+import Data.Apart (Apart (..))
+import Data.Apart.Shape (Shape (..))
+import Data.Apart.Combinators (limit, throughout, recover)
 import Data.Apart.Transformations (Segmented (..), Scattered (..))
 import Data.Apart.Structures.Stack (Stack)
 
