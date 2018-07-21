@@ -20,6 +20,9 @@ source-repository head
 library
   exposed-modules:
     Data.Apart,
+    Data.Apart.Combinators
+    Data.Apart.Shape,
+    Data.Apart.Transformations,
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,
@@ -35,11 +38,6 @@ library
     Data.Apart.Machinery.Moore,
     Data.Apart.Usage.Blockchain,
     Data.Apart.Usage.LRU
-  other-modules:
-    -- Data.Apart.Apart,
-    Data.Apart.Transformations,
-    Data.Apart.Shape,
-    Data.Apart.Combinators
   build-depends:
     base == 4.*
     , free
