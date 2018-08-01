@@ -1,4 +1,4 @@
-module Data.Apart.Structures.Dictionary () where
+module Data.Apart.Structures.Dictionary (Dictionary, Association (..)) where
 
 import "base" Data.Functor.Compose (Compose)
 import "free" Control.Comonad.Cofree (Cofree (..))
