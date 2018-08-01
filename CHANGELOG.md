@@ -11,3 +11,4 @@
 # 0.1.3
 * Rename @Abilities to @Transformations
 * Move Data.Apart.Apart module to Data.Apart
+* Add Dictionary datatype

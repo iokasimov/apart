@@ -23,6 +23,7 @@ library
     Data.Apart.Combinators
     Data.Apart.Shape,
     Data.Apart.Transformations,
+    Data.Apart.Structures.Dictionary,
     Data.Apart.Structures.Graph,
     Data.Apart.Structures.Stack,
     Data.Apart.Structures.Stream,
