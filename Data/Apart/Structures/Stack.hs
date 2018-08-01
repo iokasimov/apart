@@ -1,8 +1,8 @@
 module Data.Apart.Structures.Stack
 	(Stack, insert, singleton, foldaway, final) where
 
-import Control.Comonad.Cofree (Cofree (..), unwrap)
-import Data.Functor.Contravariant (Predicate (..))
+import "contravariant" Data.Functor.Contravariant (Predicate (..))
+import "free" Control.Comonad.Cofree (Cofree (..), unwrap)
 
 import Data.Apart.Transformations (Segmented (..))
 

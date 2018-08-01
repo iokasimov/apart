@@ -1,17 +1,17 @@
 module Data.Apart.Structures.Tree.Prefix
 	(Prefix, Labeled (..), singleton, seek, insert, crumbs) where
 
-import Control.Applicative (Alternative (..))
-import Control.Arrow ((&&&))
-import Control.Comonad (Comonad (..))
-import Control.Comonad.Cofree (Cofree (..), unwrap)
-import Control.Lens (Lens', (^.), (%~))
-import Data.Maybe (isJust)
-import Data.Foldable (find)
-import Data.Function ((&))
-import Data.Functor.Contravariant (Predicate (..))
-import Data.Functor.Contravariant.Divisible (Divisible (..))
-import Data.Monoid (Monoid (..), (<>))
+import "base" Control.Applicative (Alternative (..))
+import "base" Control.Arrow ((&&&))
+import "base" Data.Foldable (find)
+import "base" Data.Function ((&))
+import "base" Data.Maybe (isJust)
+import "base" Data.Monoid (Monoid (..), (<>))
+import "comonad" Control.Comonad (Comonad (..))
+import "contravariant" Data.Functor.Contravariant (Predicate (..))
+import "contravariant" Data.Functor.Contravariant.Divisible (Divisible (..))
+import "free" Control.Comonad.Cofree (Cofree (..), unwrap)
+import "lens" Control.Lens (Lens', (^.), (%~))
 
 import Data.Apart.Structures.Stack (Stack)
 

@@ -1,8 +1,8 @@
 module Data.Apart.Transformations (Attached (..), Embedded (..), Injected (..), Segmented (..), Scattered (..)) where
 
-import Control.Comonad.Cofree (Cofree)
-import Data.Functor.Compose (Compose)
-import Data.Kind (Type)
+import "base" Data.Functor.Compose (Compose)
+import "base" Data.Kind (Type)
+import "free" Control.Comonad.Cofree (Cofree)
 
 import Data.Apart (Apart)
 

@@ -1,8 +1,8 @@
 module Data.Apart.Usage.LRU (LRU, cache) where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Functor.Alt (Alt (..))
-import Data.Functor.Bind (Bind (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
+import "semigroupoids" Data.Functor.Alt (Alt (..))
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Transformations (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))

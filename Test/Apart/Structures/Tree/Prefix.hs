@@ -1,9 +1,9 @@
 module Test.Apart.Structures.Tree.Prefix
 	(after_successful_insert_length_should_be_incremented) where
 
-import Hedgehog (Property (..), Gen (..), forAll, property, assert)
-import Hedgehog.Gen (enumBounded, list, integral)
-import Hedgehog.Range (linear)
+import "hedgehog" Hedgehog (Property (..), Gen (..), forAll, property, assert)
+import "hedgehog" Hedgehog.Gen (enumBounded, list, integral)
+import "hedgehog" Hedgehog.Range (linear)
 
 import Data.Apart.Structures.Stack (Stack, foldaway)
 import Data.Apart.Structures.Tree.Prefix (Prefix, singleton, insert)

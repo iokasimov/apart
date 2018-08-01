@@ -1,11 +1,11 @@
 module Data.Apart.Structures.Tree.Binary.Rotation
 	(Rotate (..), rtt) where
 
-import Control.Comonad (Comonad (..))
-import Control.Comonad.Cofree (Cofree (..))
-import Control.Lens ((<&>))
-import Data.Functor.Bind (Bind (..))
-import Data.Semigroup (Semigroup (..))
+import "base" Data.Semigroup (Semigroup (..))
+import "comonad" Control.Comonad (Comonad (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
+import "lens" Control.Lens ((<&>))
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Transformations (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt, height)

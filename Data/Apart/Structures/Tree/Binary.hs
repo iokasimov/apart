@@ -1,11 +1,11 @@
 module Data.Apart.Structures.Tree.Binary
 	(Binary, Branches (..), ls, gt, singleton, insert, height, factor) where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Functor.Apply (Apply (..))
-import Data.Functor.Alt (Alt (..))
-import Data.Functor.Bind (Bind (..))
-import Data.Semigroup (Semigroup (..))
+import "base" Data.Semigroup (Semigroup (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
+import "semigroupoids" Data.Functor.Apply (Apply (..))
+import "semigroupoids" Data.Functor.Alt (Alt (..))
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Transformations (Segmented (..))
 

@@ -1,9 +1,9 @@
 module Data.Apart.Structures.Tree.Binary.AVL (insert) where
 
-import Control.Arrow ((&&&))
-import Data.Functor.Contravariant (Predicate (..))
-import Data.Functor.Contravariant.Divisible (Divisible (..))
-import Data.Functor.Bind (Bind (..))
+import "base" Control.Arrow ((&&&))
+import "contravariant" Data.Functor.Contravariant (Predicate (..))
+import "contravariant" Data.Functor.Contravariant.Divisible (Divisible (..))
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Transformations (Segmented (..))
 

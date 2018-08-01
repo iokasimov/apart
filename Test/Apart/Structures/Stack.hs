@@ -1,10 +1,10 @@
 module Test.Apart.Structures.Stack
 	(same_length_with_origin_of_foldaway) where
 
-import Data.Function ((&))
-import Hedgehog (Property (..), Gen (..), forAll, (===), property)
-import Hedgehog.Gen (enumBounded, list)
-import Hedgehog.Range (linear)
+import "base" Data.Function ((&))
+import "hedgehog" Hedgehog (Property (..), Gen (..), forAll, (===), property)
+import "hedgehog" Hedgehog.Gen (enumBounded, list)
+import "hedgehog" Hedgehog.Range (linear)
 
 import Data.Apart.Structures.Stack (Stack, insert, foldaway)
 

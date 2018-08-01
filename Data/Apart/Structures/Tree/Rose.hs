@@ -1,7 +1,7 @@
 module Data.Apart.Structures.Tree.Rose (Rose, singleton, construct) where
 
-import Control.Applicative (Alternative (..))
-import Control.Comonad.Cofree (Cofree (..), coiter)
+import "base" Control.Applicative (Alternative (..))
+import "free" Control.Comonad.Cofree (Cofree (..), coiter)
 
 type Rose t = Cofree t
 

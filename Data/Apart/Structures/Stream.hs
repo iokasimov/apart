@@ -1,7 +1,7 @@
 module Data.Apart.Structures.Stream (Stream, same) where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Functor.Identity (Identity (..))
+import "base" Data.Functor.Identity (Identity (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
 
 -- | Infinite sequence.
 type Stream = Cofree Identity

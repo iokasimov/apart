@@ -1,9 +1,9 @@
 module Data.Apart.Usage.Blockchain
 	(Transaction (..), Block, Blockchain, genesis, block, mainchain, verify) where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Bitraversable (Bitraversable (..))
-import Data.Functor.Compose (Compose (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
+import "base" Data.Bitraversable (Bitraversable (..))
+import "base" Data.Functor.Compose (Compose (..))
 
 import Data.Apart (Apart (..))
 import Data.Apart.Shape (Shape (..))

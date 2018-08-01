@@ -1,7 +1,7 @@
 module Data.Apart.Structures.Dictionary () where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Functor.Compose (Compose)
+import "base" Data.Functor.Compose (Compose)
+import "free" Control.Comonad.Cofree (Cofree (..))
 
 type Dictionary = Cofree (Association :.: Maybe)
 

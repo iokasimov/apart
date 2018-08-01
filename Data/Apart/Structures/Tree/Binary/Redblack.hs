@@ -1,6 +1,6 @@
 module Data.Apart.Structures.Tree.Binary.Redblack (Redblack, Color (..), paint) where
 
-import Control.Comonad.Cofree (Cofree (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))
 

@@ -1,6 +1,6 @@
 module Data.Apart.Machinery.Moore (Moore, dumb) where
 
-import Control.Comonad.Cofree (Cofree (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
 
 type Moore a b = Cofree ((->) b) a
 

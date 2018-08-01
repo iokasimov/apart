@@ -1,10 +1,10 @@
 module Test.Apart.Structures.Tree.Binary.AVL
 	(balance_factor_is_well) where
 
-import Hedgehog (Property (..), Gen (..), forAll, (===), property, assert, failure)
-import Hedgehog.Gen (enumBounded, list)
-import Hedgehog.Range (linear)
-import Data.Functor.Bind (Bind (..))
+import "hedgehog" Hedgehog (Property (..), Gen (..), forAll, (===), property, assert, failure)
+import "hedgehog" Hedgehog.Gen (enumBounded, list)
+import "hedgehog" Hedgehog.Range (linear)
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), singleton, factor)
 import Data.Apart.Structures.Tree.Binary.AVL (insert)

@@ -1,11 +1,11 @@
 module Test.Apart.Structures.Tree.Binary.Splay
 	(found_element_should_be_lifted_to_root) where
 
-import Control.Comonad (Comonad (..))
-import Data.Functor.Bind (Bind (..))
-import Hedgehog (Property (..), Gen (..), forAll, property, assert)
-import Hedgehog.Gen (enumBounded, list)
-import Hedgehog.Range (linear)
+import "comonad" Control.Comonad (Comonad (..))
+import "hedgehog" Hedgehog (Property (..), Gen (..), forAll, property, assert)
+import "hedgehog" Hedgehog.Gen (enumBounded, list)
+import "hedgehog" Hedgehog.Range (linear)
+import "semigroupoids" Data.Functor.Bind (Bind (..))
 
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..))
 import Data.Apart.Structures.Tree.Binary.Splay (insert, search)

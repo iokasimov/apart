@@ -1,10 +1,12 @@
 module Data.Apart.Structures.Tree.Binary.Splay (search, insert) where
 
-import Control.Comonad (Comonad (..))
-import Data.Foldable (find)
-import Data.Functor.Bind (Bind (..))
-import Data.Functor.Contravariant (Predicate (..))
-import Data.Function ((&))
+
+import "base" Data.Function ((&))
+import "base" Data.Foldable (find)
+import "comonad" Control.Comonad (Comonad (..))
+import "contravariant" Data.Functor.Contravariant (Predicate (..))
+import "semigroupoids" Data.Functor.Bind (Bind (..))
+
 
 import Data.Apart.Transformations (Segmented (..))
 import Data.Apart.Structures.Tree.Binary (Binary, Branches (..), ls, gt)

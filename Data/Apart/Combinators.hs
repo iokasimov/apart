@@ -1,8 +1,8 @@
 module Data.Apart.Combinators (Restorer, Materializer, recover, limit, throughout, inmemory) where
 
-import Control.Applicative (Alternative (..))
-import Control.Comonad.Cofree (Cofree (..))
-import Control.Monad (join)
+import "base" Control.Applicative (Alternative (..))
+import "base" Control.Monad (join)
+import "free" Control.Comonad.Cofree (Cofree (..))
 
 import Data.Apart (Apart (..))
 import Data.Apart.Shape (Shape (..))

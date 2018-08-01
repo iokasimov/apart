@@ -1,11 +1,12 @@
 module Test.Apart.Structures.Tree.Binary
 	( any_left_left_is_less_any_right_is_greater) where
 
-import Control.Comonad (extract)
-import Hedgehog (Property (..), Gen (..), forAll, property, assert)
-import Hedgehog.Gen (enumBounded, list)
-import Hedgehog.Range (linear)
-import Data.Functor.Bind (Bind (..))
+import "base" Data.Functor.Bind (Bind (..))
+import "comonad" Control.Comonad (extract)
+import "hedgehog" Hedgehog (Property (..), Gen (..), forAll, property, assert)
+import "hedgehog" Hedgehog.Gen (enumBounded, list)
+import "hedgehog" Hedgehog.Range (linear)
+
 
 import Data.Apart.Structures.Tree.Binary (Binary, ls, gt, singleton, insert)
 

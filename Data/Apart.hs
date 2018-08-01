@@ -16,11 +16,11 @@
 
 module Data.Apart (Apart (..)) where
 
-import Control.Comonad.Cofree (Cofree (..))
-import Data.Bifoldable (Bifoldable (..))
-import Data.Bifunctor (Bifunctor (..))
-import Data.Bitraversable (Bitraversable (..))
-import Data.Functor.Apply (Apply (..))
+import "base" Data.Bifoldable (Bifoldable (..))
+import "base" Data.Bifunctor (Bifunctor (..))
+import "base" Data.Bitraversable (Bitraversable (..))
+import "free" Control.Comonad.Cofree (Cofree (..))
+import "semigroupoids" Data.Functor.Apply (Apply (..))
 
 import Data.Apart.Shape (Shape (..))
 

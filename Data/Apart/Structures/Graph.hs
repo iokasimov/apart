@@ -1,7 +1,7 @@
 module Data.Apart.Structures.Graph (Graph, Edges (..), isolated, star, remove) where
 
-import Control.Comonad.Cofree (Cofree (..), unwrap)
-import Control.Comonad (Comonad (..))
+import "free" Control.Comonad.Cofree (Cofree (..), unwrap)
+import "comonad" Control.Comonad (Comonad (..))
 
 import Data.Apart.Transformations (Segmented (..))
 

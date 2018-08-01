@@ -1,11 +1,11 @@
 module Data.Apart.Shape (Shape (..)) where
 
-import Data.Bifoldable (Bifoldable (..))
-import Data.Bifunctor (Bifunctor (..))
-import Data.Bitraversable (Bitraversable (..))
-import Data.Functor.Apply (Apply (..))
-import Data.Functor.Alt (Alt (..))
-import Data.Semigroup (Semigroup (..))
+import "base" Data.Bifoldable (Bifoldable (..))
+import "base" Data.Bifunctor (Bifunctor (..))
+import "base" Data.Bitraversable (Bitraversable (..))
+import "base" Data.Semigroup (Semigroup (..))
+import "semigroupoids" Data.Functor.Apply (Apply (..))
+import "semigroupoids" Data.Functor.Alt (Alt (..))
 
 -- | Type that can tell you about aggregate state of your structure.
 data Shape t raw value

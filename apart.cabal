@@ -60,6 +60,7 @@ library
     TypeFamilies,
     TypeOperators,
     ViewPatterns,
+    PackageImports
     PatternSynonyms,
     TupleSections
 
@@ -86,6 +87,7 @@ executable example
     TypeFamilies,
     TypeOperators,
     ViewPatterns,
+    PackageImports
     PatternSynonyms,
     TupleSections
 
@@ -114,6 +116,7 @@ test-suite test
     TypeFamilies,
     TypeOperators,
     ViewPatterns,
+    PackageImports
     PatternSynonyms,
     TupleSections
   ghc-options: -fno-warn-tabs

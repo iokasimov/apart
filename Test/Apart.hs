@@ -1,7 +1,7 @@
 module Main where
 
-import System.IO (BufferMode(..), hSetBuffering, stdout, stderr)
-import Hedgehog (Group (..), checkParallel)
+import "base" System.IO (BufferMode(..), hSetBuffering, stdout, stderr)
+import "hedgehog" Hedgehog (Group (..), checkParallel)
 
 import Test.Apart.Structures.Stack
 import Test.Apart.Structures.Tree.Binary
