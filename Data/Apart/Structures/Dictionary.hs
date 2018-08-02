@@ -3,17 +3,17 @@ module Data.Apart.Structures.Dictionary (Dictionary, Association (..)) where
 import "base" Data.Functor.Compose (Compose)
 import "free" Control.Comonad.Cofree (Cofree (..))
 
-type Dictionary = Cofree (Association :.: Maybe)
+type Dictionary value key = Cofree (Association value :.: Maybe) key
 
 type (:.:) = Compose
 
-data Association a = Association a
+data Association value key = Association value key
 
-instance Functor Association where
-	fmap f (Association x) = Association $ f x
+instance Functor (Association value) where
+	fmap f (Association value key) = Association value $ f key
 
-instance Foldable Association where
-	foldr f acc (Association x) = f x acc
+instance Foldable (Association value) where
+	foldr f acc (Association value key) = f key acc
 
-instance Traversable Association where
-	traverse f (Association x) = Association <$> f x
+instance Traversable (Association value) where
+	traverse f (Association value key) = Association value <$> f key
