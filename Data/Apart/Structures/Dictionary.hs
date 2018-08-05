@@ -3,7 +3,7 @@ module Data.Apart.Structures.Dictionary (Dictionary, Association (..)) where
 import "base" Data.Functor.Compose (Compose)
 import "free" Control.Comonad.Cofree (Cofree (..))
 
-type Dictionary value key = Cofree (Association value :.: Maybe) key
+type Dictionary value = Cofree (Association value :.: Maybe)
 
 type (:.:) = Compose
 
