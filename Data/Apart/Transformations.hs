@@ -9,7 +9,7 @@ import Data.Apart (Apart)
 type (:.:) = Compose
 
 type family Attached (structure :: Type -> Type) (extension :: Type -> Type) (value :: Type) :: Type where
-    Attached (Cofree t) extension value = Cofree t (extension value)
+	Attached (Cofree t) extension value = Cofree t (extension value)
 
 type family Embedded (structure :: Type -> Type) (extension :: Type -> Type) (value :: Type) :: Type where
 	Embedded (Cofree t) extension value = Cofree (extension :.: t) value
