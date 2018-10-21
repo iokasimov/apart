@@ -12,3 +12,6 @@
 * Rename @Abilities to @Transformations
 * Move Data.Apart.Apart module to Data.Apart
 * Add @Dictionary datatype
+
+# 0.1.4
+* Add @latest in @Stack structure

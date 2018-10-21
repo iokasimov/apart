@@ -1,5 +1,5 @@
 .stack-work/
-dist/
-dist-newstyle/
+dist*
+.ghc*
 .DS_Store
 publish-docs.sh

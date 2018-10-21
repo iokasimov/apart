@@ -1,5 +1,5 @@
 module Data.Apart.Structures.Stack
-	(Stack, insert, singleton, foldaway, final) where
+	(Stack, insert, singleton, foldaway, final, latest) where
 
 import "contravariant" Data.Functor.Contravariant (Predicate (..))
 import "free" Control.Comonad.Cofree (Cofree (..), unwrap)
@@ -23,3 +23,7 @@ foldaway = foldr (\el -> Just . (:<) el) Nothing
 
 final :: Eq a => Predicate (Stack a)
 final = Predicate $ \s -> unwrap s == Nothing
+
+latest :: Stack a -> a
+latest (x :< Nothing) = x
+latest (x :< Just xs) = latest xs
